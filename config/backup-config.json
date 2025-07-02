@@ -1,0 +1,95 @@
+{
+    "jobs": [
+        {
+            "name": "CriticalSystems",
+            "type": "FileSystem",
+            "sources": [
+                "C:\\CriticalData",
+                "D:\\Databases",
+                "C:\\ApplicationData"
+            ],
+            "destination": "\\\\backup-server\\enterprise\\critical",
+            "compression": true,
+            "encryption": true,
+            "cloudSync": true,
+            "schedule": "Daily",
+            "retention": 30,
+            "priority": "High"
+        },
+        {
+            "name": "UserProfiles",
+            "type": "FileSystem",
+            "sources": [
+                "C:\\Users"
+            ],
+            "destination": "\\\\backup-server\\enterprise\\profiles",
+            "compression": true,
+            "encryption": false,
+            "cloudSync": false,
+            "schedule": "Weekly",
+            "retention": 90,
+            "priority": "Medium"
+        },
+        {
+            "name": "SystemState",
+            "type": "SystemState",
+            "sources": [
+                "SystemState"
+            ],
+            "destination": "\\\\backup-server\\enterprise\\systemstate",
+            "compression": true,
+            "encryption": true,
+            "cloudSync": true,
+            "schedule": "Weekly",
+            "retention": 60,
+            "priority": "High"
+        },
+        {
+            "name": "ApplicationLogs",
+            "type": "FileSystem",
+            "sources": [
+                "C:\\Logs",
+                "C:\\Windows\\Logs",
+                "C:\\ProgramData\\Logs"
+            ],
+            "destination": "\\\\backup-server\\enterprise\\logs",
+            "compression": true,
+            "encryption": false,
+            "cloudSync": true,
+            "schedule": "Daily",
+            "retention": 180,
+            "priority": "Low"
+        }
+    ],
+    "cloudProviders": {
+        "primary": "Azure",
+        "secondary": "AWS",
+        "azureContainer": "enterprise-backups",
+        "awsBucket": "company-backups"
+    },
+    "encryption": {
+        "keyPath": "C:\\ProgramData\\PSAutomation\\credentials\\backup.key",
+        "algorithm": "AES256"
+    },
+    "notifications": {
+        "emailOnSuccess": false,
+        "emailOnFailure": true,
+        "emailOnWarning": true,
+        "recipients": [
+            "backup-admin@company.com",
+            "it-operations@company.com"
+        ]
+    },
+    "performance": {
+        "maxParallelJobs": 2,
+        "bandwidthLimitMBps": 100,
+        "retryAttempts": 3,
+        "retryDelayMinutes": 5
+    },
+    "maintenance": {
+        "cleanupOldBackups": true,
+        "verifyIntegrity": true,
+        "generateHealthReports": true,
+        "optimizeStorage": true
+    }
+}

@@ -1,0 +1,32 @@
+# PowerShell specific
+*.ps1xml
+*.pdb
+*.dll
+*.exe
+*.psc1
+*.psd1
+*.psm1
+*.ps1.lock
+*.log
+*.zip
+*.nupkg
+
+# Common project files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Modules folder (if you download modules locally)
+Modules/
+Pester/
+
+# VS Code
+.vscode/
+
+# Credentials & Sensitive Info (examples, add your own)
+*cred*
+*secret*
+*key*
+*.pem
+*.key
+local.settings.json
