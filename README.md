@@ -12,16 +12,7 @@ This platform demonstrates essential enterprise IT operations:
 - **Infrastructure Management**: Backup automation, cloud synchronization, and performance monitoring
 - **Compliance & Governance**: Automated reporting, audit trails, and policy enforcement
 
-### Enterprise Operations Workflow
-```mermaid
-graph TD
-    A[IT Request] -->|"Automation"| B(Platform)
-    B --> C[Processing]
-    C --> D[Validation]
-    D --> E[Execution]
-    E --> F[Reporting]
-    F -->|"Results"| G[Notification]
-```
+
 
 ## 🛡️ Enterprise Capabilities
 
