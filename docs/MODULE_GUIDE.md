@@ -295,12 +295,35 @@ Provides functions for managing backups.
 - **Restore-DataFromBackup.ps1**: Restores data from a backup.
 - **Sync-BackupToCloud.ps1**: Synchronizes backups to a cloud storage provider.
 
-## PSPerformanceMonitor Module
+## PSSecurity Module
 
 ### Purpose
-Provides functions for monitoring system performance. This module is not yet implemented.
+Provides functions for security-related tasks.
 
-## PSSoftwareManager Module
+### Key Functions
+- **Find-SuspiciousProcess**: Identifies potentially suspicious processes based on common indicators.
+
+## PSSystem Module
 
 ### Purpose
-Provides functions for managing software. This module is not yet implemented.
+Provides functions for system information and management.
+
+### Key Functions
+- **Get-SystemInfo**: Gathers comprehensive system information.
+
+## PSMonitoring Module
+
+### Purpose
+Provides functions for system monitoring.
+
+### Key Functions
+- **Get-LowDiskSpace**: Checks for local disks with low free space.
+- **Get-ServiceStatus**: Monitors the status of specified Windows services.
+
+## PSNetwork Module
+
+### Purpose
+Provides functions for network-related tasks.
+
+### Key Functions
+- **Get-NetworkConnectionsSnapshot**: Takes a snapshot of current network TCP connections and UDP listeners.

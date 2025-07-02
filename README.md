@@ -16,10 +16,13 @@ This platform demonstrates essential enterprise IT operations:
 
 ## 🛡️ Enterprise Capabilities
 
-1. **Active Directory Management**: Comprehensive user lifecycle automation and group management
-2. **Backup & Recovery**: Enterprise-grade backup automation with cloud integration
-3. **Security Monitoring**: Advanced threat detection and compliance reporting
-4. **Infrastructure Operations**: Automated system management and performance monitoring
+1.  **Active Directory Management**: Comprehensive user lifecycle automation and group management
+2.  **Backup & Recovery**: Enterprise-grade backup automation with cloud integration
+3.  **Security Monitoring**: Advanced threat detection and compliance reporting
+4.  **Infrastructure Operations**: Automated system management and performance monitoring
+5.  **System Information**: Gather comprehensive system information.
+6.  **Monitoring**: Monitor system resources like disk space and critical services.
+7.  **Network**: Get a snapshot of network connections.
 
 ## 📁 Project Structure
 
@@ -30,10 +33,13 @@ powershell-automation/
 │   ├── PSActiveDirectory/     # AD management module
 │   ├── PSBackupManager/       # Backup automation module
 │   ├── PSPerformanceMonitor/  # Performance monitoring module
-│   └── PSSoftwareManager/     # Software management module
+│   ├── PSSoftwareManager/     # Software management module
+│   ├── PSSecurity/            # Security-related functions
+│   ├── PSSystem/              # System information and management functions
+│   └── PSMonitoring/          # System monitoring functions
+│   └── PSNetwork/             # Network-related functions
 ├── scripts/
 │   ├── administration/        # Enterprise administration scripts
-│   └── legacy/               # Original cybersecurity scripts
 ├── tests/
 │   ├── unit/                 # Unit tests
 │   └── integration/          # Integration tests
@@ -80,23 +86,7 @@ Shared enterprise functions used across all scripts:
 | `Restore-DataFromBackup.ps1` | Automated data restoration with rollback capability |
 | `Sync-BackupToCloud.ps1` | Multi-cloud backup synchronization |
 
-### Legacy Security Scripts
-Original cybersecurity and system auditing scripts (located in `scripts/legacy/`):
-- **Audit-ScheduledTasks.ps1**: Audits and lists all scheduled tasks on the system, showing their paths, triggers, actions, and run times.
-- **Check-LastPatchTime.ps1**: Determines the last time the system was successfully updated by Windows Update.
-- **Clear-TemporaryFiles.ps1**: Clears temporary files from user and system temp folders, with options for filtering by age and performing a dry run.
-- **Collect-VolatileData.ps1**: Gathers a snapshot of volatile system data, including logged-on users, network connections, and running processes.
-- **Find-SuspiciousProcess.ps1**: Identifies potentially suspicious processes based on indicators like running from temp directories or lacking metadata.
-- **Get-FirewallRules.ps1**: Retrieves and displays Windows Firewall rules, with options to filter by direction, action, and enabled status.
-- **Get-FirewallRulesSummary.ps1**: Provides a high-level summary of firewall rules and identifies potentially risky configurations.
-- **Get-LocalUserInfo.ps1**: Retrieves detailed information about local user accounts, including their group memberships and password policies.
-- **Get-LowDiskSpace.ps1**: Checks for local disks with low free space, based on a configurable percentage threshold.
-- **Get-NetworkConnectionsSnapshot.ps1**: Takes a snapshot of current network TCP connections and UDP listeners.
-- **Get-RecentSystemErrors.ps1**: Retrieves recent error and warning events from the System event log.
-- **Get-SystemInfo.ps1**: Gathers comprehensive system information, including OS, hardware, and network configuration.
-- **Monitor-CriticalServices.ps1**: Monitors the status of specified Windows services.
-- **Search-SpecificEventID.ps1**: Searches for specific Event IDs in a given event log within a specified timeframe.
-- **Verify-AntivirusStatus.ps1**: Verifies the status of the installed antivirus software, including Windows Defender and third-party products.
+
 
 ## 🚀 Quick Start
 
