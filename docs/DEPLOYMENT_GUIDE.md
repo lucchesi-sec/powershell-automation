@@ -69,24 +69,14 @@ Copy-Item -Path ".\config\*" -Destination "C:\ProgramData\PSAutomation\config" -
 
 ### Method 2: Automated Installation
 
-#### Installation Script
-```powershell
-# Run the automated installer
-.\Install-PSAutomationPlatform.ps1 -InstallPath "C:\PSAutomation" -ConfigureScheduledTasks -CreateServiceAccount
-```
-
-#### Silent Installation
-```powershell
-# Unattended installation for deployment automation
-.\Install-PSAutomationPlatform.ps1 -Silent -AcceptLicense -InstallPath "C:\PSAutomation"
-```
+An installation script is not provided in this project. You can create your own deployment script based on the manual installation steps.
 
 ## Configuration
 
 ### Core Configuration
 
 #### 1. Email Notifications
-Create `C:\ProgramData\PSAutomation\config\email.json`:
+Create a file named `email.json` in a secure location (e.g., `C:\ProgramData\PSAutomation\config`) with the following structure. This project includes a sample file in the `config` directory.
 ```json
 {
     "From": "automation@company.com",

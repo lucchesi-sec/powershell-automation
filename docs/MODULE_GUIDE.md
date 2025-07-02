@@ -267,4 +267,40 @@ Copy-Item $env:PSModulePath\PSAdminCore $env:PSModulePath\PSAdminCore.backup -Re
 Test-ModuleFunctionality
 ```
 
+---
+
 This module guide provides the foundation for effectively using and maintaining the PowerShell Enterprise Automation Platform modules.
+
+## PSActiveDirectory Module
+
+### Purpose
+Provides functions for managing Active Directory users and groups.
+
+### Key Functions
+- **New-ADUserBulk.ps1**: Bulk user creation from a CSV file.
+- **Set-ADUserLifecycle.ps1**: Manages the user lifecycle, including onboarding and offboarding.
+- **Sync-ADGroupMembership.ps1**: Synchronizes group memberships from a source.
+- **Get-ADUserActivityReport.ps1**: Generates reports on user activity.
+- **Reset-ADUserPasswordBulk.ps1**: Bulk password reset for users.
+
+## PSBackupManager Module
+
+### Purpose
+Provides functions for managing backups.
+
+### Key Functions
+- **Start-AutomatedBackup.ps1**: Starts an automated backup process.
+- **Test-BackupIntegrity.ps1**: Tests the integrity of backups.
+- **Get-BackupHealthReport.ps1**: Generates a health report for backups.
+- **Restore-DataFromBackup.ps1**: Restores data from a backup.
+- **Sync-BackupToCloud.ps1**: Synchronizes backups to a cloud storage provider.
+
+## PSPerformanceMonitor Module
+
+### Purpose
+Provides functions for monitoring system performance. This module is not yet implemented.
+
+## PSSoftwareManager Module
+
+### Purpose
+Provides functions for managing software. This module is not yet implemented.

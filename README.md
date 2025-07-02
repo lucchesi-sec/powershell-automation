@@ -82,10 +82,21 @@ Shared enterprise functions used across all scripts:
 
 ### Legacy Security Scripts
 Original cybersecurity and system auditing scripts (located in `scripts/legacy/`):
-- System information gathering
-- Security monitoring and threat detection
-- Network analysis and firewall auditing
-- Event log analysis and compliance checking
+- **Audit-ScheduledTasks.ps1**: Audits and lists all scheduled tasks on the system, showing their paths, triggers, actions, and run times.
+- **Check-LastPatchTime.ps1**: Determines the last time the system was successfully updated by Windows Update.
+- **Clear-TemporaryFiles.ps1**: Clears temporary files from user and system temp folders, with options for filtering by age and performing a dry run.
+- **Collect-VolatileData.ps1**: Gathers a snapshot of volatile system data, including logged-on users, network connections, and running processes.
+- **Find-SuspiciousProcess.ps1**: Identifies potentially suspicious processes based on indicators like running from temp directories or lacking metadata.
+- **Get-FirewallRules.ps1**: Retrieves and displays Windows Firewall rules, with options to filter by direction, action, and enabled status.
+- **Get-FirewallRulesSummary.ps1**: Provides a high-level summary of firewall rules and identifies potentially risky configurations.
+- **Get-LocalUserInfo.ps1**: Retrieves detailed information about local user accounts, including their group memberships and password policies.
+- **Get-LowDiskSpace.ps1**: Checks for local disks with low free space, based on a configurable percentage threshold.
+- **Get-NetworkConnectionsSnapshot.ps1**: Takes a snapshot of current network TCP connections and UDP listeners.
+- **Get-RecentSystemErrors.ps1**: Retrieves recent error and warning events from the System event log.
+- **Get-SystemInfo.ps1**: Gathers comprehensive system information, including OS, hardware, and network configuration.
+- **Monitor-CriticalServices.ps1**: Monitors the status of specified Windows services.
+- **Search-SpecificEventID.ps1**: Searches for specific Event IDs in a given event log within a specified timeframe.
+- **Verify-AntivirusStatus.ps1**: Verifies the status of the installed antivirus software, including Windows Defender and third-party products.
 
 ## 🚀 Quick Start
 
