@@ -1,5 +1,22 @@
 # Enterprise Deployment Guide
 
+## Table of Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Installation Methods](#installation-methods)
+- [Configuration](#configuration)
+- [DocFX Documentation Site](#docfx-documentation-site)
+- [CI/CD Pipeline Setup](#cicd-pipeline-setup)
+- [Security Configuration](#security-configuration)
+- [Scheduled Task Configuration](#scheduled-task-configuration)
+- [Network and Firewall Configuration](#network-and-firewall-configuration)
+- [Monitoring and Logging](#monitoring-and-logging)
+- [Backup Strategy](#backup-strategy)
+- [Testing and Validation](#testing-and-validation)
+- [Maintenance Procedures](#maintenance-procedures)
+- [Troubleshooting](#troubleshooting)
+- [Security Considerations](#security-considerations)
+
 ## Overview
 
 This guide provides comprehensive instructions for deploying the PowerShell Enterprise Automation Platform in production environments. It covers installation, configuration, security hardening, and operational procedures for enterprise-scale deployments.
@@ -70,6 +87,90 @@ Copy-Item -Path ".\config\*" -Destination "C:\ProgramData\PSAutomation\config" -
 ### Method 2: Automated Installation
 
 An installation script is not provided in this project. You can create your own deployment script based on the manual installation steps.
+
+## DocFX Documentation Site
+
+### Local Documentation Setup
+
+To build and serve the documentation site locally:
+
+```powershell
+# Install DocFX globally
+dotnet tool install -g docfx
+
+# Navigate to the DocFX project
+cd docfx_project
+
+# Build the documentation site
+docfx docfx.json
+
+# Serve locally (optional)
+docfx docfx.json --serve
+```
+
+The documentation will be available at `http://localhost:8080`.
+
+### GitHub Pages Deployment
+
+The project includes automated GitHub Pages deployment via GitHub Actions:
+
+1. **Enable GitHub Pages**: Go to repository Settings → Pages → Source: "GitHub Actions"
+2. **Push changes**: The workflow automatically triggers on pushes to `main` branch
+3. **View site**: Access at `https://[username].github.io/[repository-name]`
+
+## CI/CD Pipeline Setup
+
+### GitHub Actions Workflow
+
+The project includes a comprehensive CI/CD workflow (`.github/workflows/docfx.yml`) that:
+
+- **Builds DocFX site** using .NET 8.0 and latest DocFX
+- **Validates content** and ensures all links work
+- **Deploys automatically** to GitHub Pages on main branch
+- **Provides artifacts** for manual deployment if needed
+
+### Workflow Configuration
+
+```yaml
+name: Build and Deploy DocFX Documentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Install DocFX
+      run: dotnet tool install -g docfx
+      
+    - name: Build DocFX site
+      run: docfx docfx_project/docfx.json
+```
+
+### Custom Domain Setup (Optional)
+
+To use a custom domain:
+
+1. **Add CNAME file**: Create `docfx_project/CNAME` with your domain
+2. **Configure DNS**: Point your domain to GitHub Pages
+3. **Enable HTTPS**: GitHub automatically provides SSL certificates
+
+```bash
+# Example CNAME file content
+docs.yourcompany.com
+```
 
 ## Configuration
 

@@ -35,9 +35,41 @@
 /* Enhanced Typography */
 body {
   font-family: var(--font-primary);
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.7;
   background-color: var(--theme-bg);
   color: var(--theme-text);
+}
+
+/* Base content styling */
+article {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Paragraph spacing */
+p {
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* List styling */
+ul, ol {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+}
+
+ul li, ol li {
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* Nested lists */
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
 }
 
 [data-bs-theme="dark"] body {
@@ -472,24 +504,39 @@ h6 {
 @media (max-width: 768px) {
   /* Typography adjustments for mobile */
   body {
-    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  
+  article {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+  
+  p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+  
+  ul li, ol li {
+    font-size: 1rem;
     line-height: 1.7;
   }
   
   h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-md);
   }
   
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
   }
   
   h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
   }
@@ -613,15 +660,35 @@ h6 {
 @media (max-width: 480px) {
   /* Even more compact for small phones */
   body {
-    font-size: 15px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  
+  article {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  
+  ul li, ol li {
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
   
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
   
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
   }
   
   article {
