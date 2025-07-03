@@ -918,217 +918,635 @@ article {
   padding: var(--spacing-lg);
 }
 
-/* Enhanced TOC (Table of Contents) Sidebar Styling */
-.affix {
-  background: var(--theme-card);
-  border: 2px solid var(--ps-primary);
-  border-radius: 12px;
-  padding: var(--spacing-lg);
-  box-shadow: 0 4px 16px rgba(0, 120, 212, 0.1);
-  margin-top: var(--spacing-lg);
-  width: 280px;
-  min-width: 280px;
+/* Comprehensive Right Sidebar TOC Styling - Targeting Multiple Possible Selectors */
+.affix,
+.toc,
+.article-nav,
+.in-this-article,
+div[data-toc],
+.table-of-contents,
+.right-sidebar-toc,
+aside.toc,
+.sidebar-secondary,
+.article-outline {
+  background: var(--theme-card) !important;
+  border: 2px solid var(--ps-primary) !important;
+  border-radius: 12px !important;
+  padding: var(--spacing-lg) !important;
+  box-shadow: 0 4px 16px rgba(0, 120, 212, 0.1) !important;
+  margin-top: var(--spacing-lg) !important;
+  width: 280px !important;
+  min-width: 280px !important;
 }
 
-.affix::before {
-  content: "📋 Table of Contents";
-  display: block;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ps-primary);
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 2px solid var(--ps-primary);
-  text-align: center;
+/* TOC Title Styling - Remove emojis, clean professional look */
+.affix::before,
+.toc::before,
+.article-nav::before,
+.in-this-article::before,
+div[data-toc]::before,
+.table-of-contents::before,
+.right-sidebar-toc::before,
+aside.toc::before,
+.sidebar-secondary::before,
+.article-outline::before {
+  content: "Table of Contents" !important;
+  display: block !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--ps-primary) !important;
+  margin-bottom: var(--spacing-md) !important;
+  padding-bottom: var(--spacing-sm) !important;
+  border-bottom: 2px solid var(--ps-primary) !important;
+  text-align: center !important;
 }
 
-.affix nav ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
+/* Enhanced Navigation Lists - Target multiple possible structures */
+.affix nav ul,
+.toc nav ul,
+.article-nav nav ul,
+.in-this-article nav ul,
+div[data-toc] nav ul,
+.table-of-contents nav ul,
+.right-sidebar-toc nav ul,
+aside.toc nav ul,
+.sidebar-secondary nav ul,
+.article-outline nav ul,
+.affix ul,
+.toc ul,
+.article-nav ul,
+.in-this-article ul,
+div[data-toc] ul,
+.table-of-contents ul,
+.right-sidebar-toc ul,
+aside.toc ul,
+.sidebar-secondary ul,
+.article-outline ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
 }
 
-.affix nav ul ul {
-  padding-left: var(--spacing-lg);
-  margin-top: var(--spacing-sm);
-  border-left: 2px solid rgba(0, 120, 212, 0.2);
-  margin-left: var(--spacing-sm);
+/* Nested lists styling */
+.affix nav ul ul,
+.toc nav ul ul,
+.article-nav nav ul ul,
+.in-this-article nav ul ul,
+div[data-toc] nav ul ul,
+.table-of-contents nav ul ul,
+.right-sidebar-toc nav ul ul,
+aside.toc nav ul ul,
+.sidebar-secondary nav ul ul,
+.article-outline nav ul ul,
+.affix ul ul,
+.toc ul ul,
+.article-nav ul ul,
+.in-this-article ul ul,
+div[data-toc] ul ul,
+.table-of-contents ul ul,
+.right-sidebar-toc ul ul,
+aside.toc ul ul,
+.sidebar-secondary ul ul,
+.article-outline ul ul {
+  padding-left: var(--spacing-lg) !important;
+  margin-top: var(--spacing-sm) !important;
+  border-left: 2px solid rgba(0, 120, 212, 0.2) !important;
+  margin-left: var(--spacing-sm) !important;
 }
 
-.affix nav ul li {
-  margin-bottom: var(--spacing-md);
-  position: relative;
-  line-height: 1.6;
+/* List item styling */
+.affix nav ul li,
+.toc nav ul li,
+.article-nav nav ul li,
+.in-this-article nav ul li,
+div[data-toc] nav ul li,
+.table-of-contents nav ul li,
+.right-sidebar-toc nav ul li,
+aside.toc nav ul li,
+.sidebar-secondary nav ul li,
+.article-outline nav ul li,
+.affix ul li,
+.toc ul li,
+.article-nav ul li,
+.in-this-article ul li,
+div[data-toc] ul li,
+.table-of-contents ul li,
+.right-sidebar-toc ul li,
+aside.toc ul li,
+.sidebar-secondary ul li,
+.article-outline ul li {
+  margin-bottom: var(--spacing-md) !important;
+  position: relative !important;
+  line-height: 1.6 !important;
 }
 
-.affix nav > ul > li {
-  margin-bottom: var(--spacing-lg);
+/* Remove all pseudo-element decorations for clean look */
+.affix nav ul li::before,
+.toc nav ul li::before,
+.article-nav nav ul li::before,
+.in-this-article nav ul li::before,
+div[data-toc] nav ul li::before,
+.table-of-contents nav ul li::before,
+.right-sidebar-toc nav ul li::before,
+aside.toc nav ul li::before,
+.sidebar-secondary nav ul li::before,
+.article-outline nav ul li::before,
+.affix ul li::before,
+.toc ul li::before,
+.article-nav ul li::before,
+.in-this-article ul li::before,
+div[data-toc] ul li::before,
+.table-of-contents ul li::before,
+.right-sidebar-toc ul li::before,
+aside.toc ul li::before,
+.sidebar-secondary ul li::before,
+.article-outline ul li::before {
+  display: none !important;
 }
 
-/* Remove emojis/icons for cleaner look */
-.affix nav ul li::before {
-  display: none;
+/* Link styling with improved readability */
+.affix nav ul li a,
+.toc nav ul li a,
+.article-nav nav ul li a,
+.in-this-article nav ul li a,
+div[data-toc] nav ul li a,
+.table-of-contents nav ul li a,
+.right-sidebar-toc nav ul li a,
+aside.toc nav ul li a,
+.sidebar-secondary nav ul li a,
+.article-outline nav ul li a,
+.affix ul li a,
+.toc ul li a,
+.article-nav ul li a,
+.in-this-article ul li a,
+div[data-toc] ul li a,
+.table-of-contents ul li a,
+.right-sidebar-toc ul li a,
+aside.toc ul li a,
+.sidebar-secondary ul li a,
+.article-outline ul li a,
+.affix a,
+.toc a,
+.article-nav a,
+.in-this-article a,
+div[data-toc] a,
+.table-of-contents a,
+.right-sidebar-toc a,
+aside.toc a,
+.sidebar-secondary a,
+.article-outline a {
+  color: var(--theme-text) !important;
+  text-decoration: none !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  display: block !important;
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  border-radius: 8px !important;
+  line-height: 1.6 !important;
+  border-left: 3px solid transparent !important;
 }
 
-.affix nav ul li a {
-  color: var(--theme-text);
-  text-decoration: none;
-  font-size: 1.05rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  display: block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: 8px;
-  line-height: 1.6;
-  border-left: 3px solid transparent;
+/* Top-level link styling */
+.affix nav > ul > li > a,
+.toc nav > ul > li > a,
+.article-nav nav > ul > li > a,
+.in-this-article nav > ul > li > a,
+div[data-toc] nav > ul > li > a,
+.table-of-contents nav > ul > li > a,
+.right-sidebar-toc nav > ul > li > a,
+aside.toc nav > ul > li > a,
+.sidebar-secondary nav > ul > li > a,
+.article-outline nav > ul > li > a,
+.affix > ul > li > a,
+.toc > ul > li > a,
+.article-nav > ul > li > a,
+.in-this-article > ul > li > a,
+div[data-toc] > ul > li > a,
+.table-of-contents > ul > li > a,
+.right-sidebar-toc > ul > li > a,
+aside.toc > ul > li > a,
+.sidebar-secondary > ul > li > a,
+.article-outline > ul > li > a {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--ps-primary) !important;
+  border-left: 3px solid var(--ps-primary) !important;
+  background-color: rgba(0, 120, 212, 0.05) !important;
 }
 
-.affix nav > ul > li > a {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ps-primary);
-  border-left: 3px solid var(--ps-primary);
-  background-color: rgba(0, 120, 212, 0.05);
-}
-
-.affix nav ul ul li a {
-  font-size: 1rem;
-  font-weight: 500;
-  padding-left: var(--spacing-lg);
-  color: #6B7280;
-}
-
+/* Hover and active states */
 .affix nav ul li a:hover,
-.affix nav ul li a.active {
-  color: var(--ps-primary);
-  background-color: rgba(0, 120, 212, 0.1);
-  border-left-color: var(--ps-primary);
-  transform: translateX(2px);
+.affix nav ul li a.active,
+.toc nav ul li a:hover,
+.toc nav ul li a.active,
+.article-nav nav ul li a:hover,
+.article-nav nav ul li a.active,
+.in-this-article nav ul li a:hover,
+.in-this-article nav ul li a.active,
+div[data-toc] nav ul li a:hover,
+div[data-toc] nav ul li a.active,
+.table-of-contents nav ul li a:hover,
+.table-of-contents nav ul li a.active,
+.right-sidebar-toc nav ul li a:hover,
+.right-sidebar-toc nav ul li a.active,
+aside.toc nav ul li a:hover,
+aside.toc nav ul li a.active,
+.sidebar-secondary nav ul li a:hover,
+.sidebar-secondary nav ul li a.active,
+.article-outline nav ul li a:hover,
+.article-outline nav ul li a.active,
+.affix ul li a:hover,
+.affix ul li a.active,
+.toc ul li a:hover,
+.toc ul li a.active,
+.article-nav ul li a:hover,
+.article-nav ul li a.active,
+.in-this-article ul li a:hover,
+.in-this-article ul li a.active,
+div[data-toc] ul li a:hover,
+div[data-toc] ul li a.active,
+.table-of-contents ul li a:hover,
+.table-of-contents ul li a.active,
+.right-sidebar-toc ul li a:hover,
+.right-sidebar-toc ul li a.active,
+aside.toc ul li a:hover,
+aside.toc ul li a.active,
+.sidebar-secondary ul li a:hover,
+.sidebar-secondary ul li a.active,
+.article-outline ul li a:hover,
+.article-outline ul li a.active {
+  color: var(--ps-primary) !important;
+  background-color: rgba(0, 120, 212, 0.1) !important;
+  border-left-color: var(--ps-primary) !important;
+  transform: translateX(2px) !important;
 }
 
-.affix nav ul ul li a:hover,
-.affix nav ul ul li a.active {
-  color: var(--ps-primary-dark);
-  background-color: rgba(0, 120, 212, 0.08);
+/* Focus states for accessibility */
+.affix nav ul li a:focus,
+.toc nav ul li a:focus,
+.article-nav nav ul li a:focus,
+.in-this-article nav ul li a:focus,
+div[data-toc] nav ul li a:focus,
+.table-of-contents nav ul li a:focus,
+.right-sidebar-toc nav ul li a:focus,
+aside.toc nav ul li a:focus,
+.sidebar-secondary nav ul li a:focus,
+.article-outline nav ul li a:focus,
+.affix ul li a:focus,
+.toc ul li a:focus,
+.article-nav ul li a:focus,
+.in-this-article ul li a:focus,
+div[data-toc] ul li a:focus,
+.table-of-contents ul li a:focus,
+.right-sidebar-toc ul li a:focus,
+aside.toc ul li a:focus,
+.sidebar-secondary ul li a:focus,
+.article-outline ul li a:focus {
+  outline: 2px solid var(--ps-primary) !important;
+  outline-offset: 2px !important;
 }
 
-.affix nav ul li a:focus {
-  outline: 2px solid var(--ps-primary);
-  outline-offset: 2px;
+/* Comprehensive Dark Mode Styles for All TOC Selectors */
+[data-bs-theme="dark"] .affix,
+[data-bs-theme="dark"] .toc,
+[data-bs-theme="dark"] .article-nav,
+[data-bs-theme="dark"] .in-this-article,
+[data-bs-theme="dark"] div[data-toc],
+[data-bs-theme="dark"] .table-of-contents,
+[data-bs-theme="dark"] .right-sidebar-toc,
+[data-bs-theme="dark"] aside.toc,
+[data-bs-theme="dark"] .sidebar-secondary,
+[data-bs-theme="dark"] .article-outline {
+  background: var(--theme-card) !important;
+  border-color: var(--ps-secondary) !important;
+  box-shadow: 0 4px 16px rgba(0, 188, 242, 0.15) !important;
 }
 
-/* Dark mode styles */
-[data-bs-theme="dark"] .affix {
-  background: var(--theme-card);
-  border-color: var(--ps-secondary);
-  box-shadow: 0 4px 16px rgba(0, 188, 242, 0.15);
+[data-bs-theme="dark"] .affix::before,
+[data-bs-theme="dark"] .toc::before,
+[data-bs-theme="dark"] .article-nav::before,
+[data-bs-theme="dark"] .in-this-article::before,
+[data-bs-theme="dark"] div[data-toc]::before,
+[data-bs-theme="dark"] .table-of-contents::before,
+[data-bs-theme="dark"] .right-sidebar-toc::before,
+[data-bs-theme="dark"] aside.toc::before,
+[data-bs-theme="dark"] .sidebar-secondary::before,
+[data-bs-theme="dark"] .article-outline::before {
+  color: var(--ps-secondary) !important;
+  border-bottom-color: var(--ps-secondary) !important;
 }
 
-[data-bs-theme="dark"] .affix::before {
-  color: var(--ps-secondary);
-  border-bottom-color: var(--ps-secondary);
+/* Dark mode link styling */
+[data-bs-theme="dark"] .affix nav ul li a,
+[data-bs-theme="dark"] .toc nav ul li a,
+[data-bs-theme="dark"] .article-nav nav ul li a,
+[data-bs-theme="dark"] .in-this-article nav ul li a,
+[data-bs-theme="dark"] div[data-toc] nav ul li a,
+[data-bs-theme="dark"] .table-of-contents nav ul li a,
+[data-bs-theme="dark"] .right-sidebar-toc nav ul li a,
+[data-bs-theme="dark"] aside.toc nav ul li a,
+[data-bs-theme="dark"] .sidebar-secondary nav ul li a,
+[data-bs-theme="dark"] .article-outline nav ul li a,
+[data-bs-theme="dark"] .affix ul li a,
+[data-bs-theme="dark"] .toc ul li a,
+[data-bs-theme="dark"] .article-nav ul li a,
+[data-bs-theme="dark"] .in-this-article ul li a,
+[data-bs-theme="dark"] div[data-toc] ul li a,
+[data-bs-theme="dark"] .table-of-contents ul li a,
+[data-bs-theme="dark"] .right-sidebar-toc ul li a,
+[data-bs-theme="dark"] aside.toc ul li a,
+[data-bs-theme="dark"] .sidebar-secondary ul li a,
+[data-bs-theme="dark"] .article-outline ul li a {
+  color: var(--theme-text) !important;
 }
 
-[data-bs-theme="dark"] .affix nav ul ul {
-  border-left-color: rgba(0, 188, 242, 0.3);
+/* Dark mode top-level links */
+[data-bs-theme="dark"] .affix nav > ul > li > a,
+[data-bs-theme="dark"] .toc nav > ul > li > a,
+[data-bs-theme="dark"] .article-nav nav > ul > li > a,
+[data-bs-theme="dark"] .in-this-article nav > ul > li > a,
+[data-bs-theme="dark"] div[data-toc] nav > ul > li > a,
+[data-bs-theme="dark"] .table-of-contents nav > ul > li > a,
+[data-bs-theme="dark"] .right-sidebar-toc nav > ul > li > a,
+[data-bs-theme="dark"] aside.toc nav > ul > li > a,
+[data-bs-theme="dark"] .sidebar-secondary nav > ul > li > a,
+[data-bs-theme="dark"] .article-outline nav > ul > li > a,
+[data-bs-theme="dark"] .affix > ul > li > a,
+[data-bs-theme="dark"] .toc > ul > li > a,
+[data-bs-theme="dark"] .article-nav > ul > li > a,
+[data-bs-theme="dark"] .in-this-article > ul > li > a,
+[data-bs-theme="dark"] div[data-toc] > ul > li > a,
+[data-bs-theme="dark"] .table-of-contents > ul > li > a,
+[data-bs-theme="dark"] .right-sidebar-toc > ul > li > a,
+[data-bs-theme="dark"] aside.toc > ul > li > a,
+[data-bs-theme="dark"] .sidebar-secondary > ul > li > a,
+[data-bs-theme="dark"] .article-outline > ul > li > a {
+  color: var(--ps-secondary) !important;
+  border-left-color: var(--ps-secondary) !important;
+  background-color: rgba(0, 188, 242, 0.1) !important;
 }
 
-[data-bs-theme="dark"] .affix nav ul li a {
-  color: var(--theme-text);
-}
-
-[data-bs-theme="dark"] .affix nav > ul > li > a {
-  color: var(--ps-secondary);
-  border-left-color: var(--ps-secondary);
-  background-color: rgba(0, 188, 242, 0.1);
-}
-
-[data-bs-theme="dark"] .affix nav ul ul li a {
-  color: #9CA3AF;
-}
-
+/* Dark mode hover and active states */
 [data-bs-theme="dark"] .affix nav ul li a:hover,
-[data-bs-theme="dark"] .affix nav ul li a.active {
-  color: var(--ps-secondary);
-  background-color: rgba(0, 188, 242, 0.15);
-  border-left-color: var(--ps-secondary);
+[data-bs-theme="dark"] .affix nav ul li a.active,
+[data-bs-theme="dark"] .toc nav ul li a:hover,
+[data-bs-theme="dark"] .toc nav ul li a.active,
+[data-bs-theme="dark"] .article-nav nav ul li a:hover,
+[data-bs-theme="dark"] .article-nav nav ul li a.active,
+[data-bs-theme="dark"] .in-this-article nav ul li a:hover,
+[data-bs-theme="dark"] .in-this-article nav ul li a.active,
+[data-bs-theme="dark"] div[data-toc] nav ul li a:hover,
+[data-bs-theme="dark"] div[data-toc] nav ul li a.active,
+[data-bs-theme="dark"] .table-of-contents nav ul li a:hover,
+[data-bs-theme="dark"] .table-of-contents nav ul li a.active,
+[data-bs-theme="dark"] .right-sidebar-toc nav ul li a:hover,
+[data-bs-theme="dark"] .right-sidebar-toc nav ul li a.active,
+[data-bs-theme="dark"] aside.toc nav ul li a:hover,
+[data-bs-theme="dark"] aside.toc nav ul li a.active,
+[data-bs-theme="dark"] .sidebar-secondary nav ul li a:hover,
+[data-bs-theme="dark"] .sidebar-secondary nav ul li a.active,
+[data-bs-theme="dark"] .article-outline nav ul li a:hover,
+[data-bs-theme="dark"] .article-outline nav ul li a.active,
+[data-bs-theme="dark"] .affix ul li a:hover,
+[data-bs-theme="dark"] .affix ul li a.active,
+[data-bs-theme="dark"] .toc ul li a:hover,
+[data-bs-theme="dark"] .toc ul li a.active,
+[data-bs-theme="dark"] .article-nav ul li a:hover,
+[data-bs-theme="dark"] .article-nav ul li a.active,
+[data-bs-theme="dark"] .in-this-article ul li a:hover,
+[data-bs-theme="dark"] .in-this-article ul li a.active,
+[data-bs-theme="dark"] div[data-toc] ul li a:hover,
+[data-bs-theme="dark"] div[data-toc] ul li a.active,
+[data-bs-theme="dark"] .table-of-contents ul li a:hover,
+[data-bs-theme="dark"] .table-of-contents ul li a.active,
+[data-bs-theme="dark"] .right-sidebar-toc ul li a:hover,
+[data-bs-theme="dark"] .right-sidebar-toc ul li a.active,
+[data-bs-theme="dark"] aside.toc ul li a:hover,
+[data-bs-theme="dark"] aside.toc ul li a.active,
+[data-bs-theme="dark"] .sidebar-secondary ul li a:hover,
+[data-bs-theme="dark"] .sidebar-secondary ul li a.active,
+[data-bs-theme="dark"] .article-outline ul li a:hover,
+[data-bs-theme="dark"] .article-outline ul li a.active {
+  color: var(--ps-secondary) !important;
+  background-color: rgba(0, 188, 242, 0.15) !important;
+  border-left-color: var(--ps-secondary) !important;
 }
 
-[data-bs-theme="dark"] .affix nav ul ul li a:hover,
-[data-bs-theme="dark"] .affix nav ul ul li a.active {
-  color: var(--ps-secondary);
-  background-color: rgba(0, 188, 242, 0.12);
-}
-
-/* Mobile TOC adjustments */
+/* Comprehensive Mobile TOC Adjustments for All Selectors */
 @media (max-width: 768px) {
-  .affix {
-    width: 100%;
-    min-width: auto;
-    margin: var(--spacing-md) 0;
-    padding: var(--spacing-md);
+  .affix,
+  .toc,
+  .article-nav,
+  .in-this-article,
+  div[data-toc],
+  .table-of-contents,
+  .right-sidebar-toc,
+  aside.toc,
+  .sidebar-secondary,
+  .article-outline {
+    width: 100% !important;
+    min-width: auto !important;
+    margin: var(--spacing-md) 0 !important;
+    padding: var(--spacing-md) !important;
   }
   
-  .affix::before {
-    font-size: 1.1rem;
+  .affix::before,
+  .toc::before,
+  .article-nav::before,
+  .in-this-article::before,
+  div[data-toc]::before,
+  .table-of-contents::before,
+  .right-sidebar-toc::before,
+  aside.toc::before,
+  .sidebar-secondary::before,
+  .article-outline::before {
+    font-size: 1.1rem !important;
   }
   
-  .affix nav ul li a {
-    font-size: 1rem;
-    padding: var(--spacing-sm);
+  .affix nav ul li a,
+  .affix ul li a,
+  .toc nav ul li a,
+  .toc ul li a,
+  .article-nav nav ul li a,
+  .article-nav ul li a,
+  .in-this-article nav ul li a,
+  .in-this-article ul li a,
+  div[data-toc] nav ul li a,
+  div[data-toc] ul li a,
+  .table-of-contents nav ul li a,
+  .table-of-contents ul li a,
+  .right-sidebar-toc nav ul li a,
+  .right-sidebar-toc ul li a,
+  aside.toc nav ul li a,
+  aside.toc ul li a,
+  .sidebar-secondary nav ul li a,
+  .sidebar-secondary ul li a,
+  .article-outline nav ul li a,
+  .article-outline ul li a {
+    font-size: 1rem !important;
+    padding: var(--spacing-sm) !important;
   }
   
-  .affix nav > ul > li > a {
-    font-size: 1.05rem;
-  }
-  
-  .affix nav ul ul li a {
-    font-size: 0.95rem;
-    padding-left: var(--spacing-md);
+  .affix nav > ul > li > a,
+  .affix > ul > li > a,
+  .toc nav > ul > li > a,
+  .toc > ul > li > a,
+  .article-nav nav > ul > li > a,
+  .article-nav > ul > li > a,
+  .in-this-article nav > ul > li > a,
+  .in-this-article > ul > li > a,
+  div[data-toc] nav > ul > li > a,
+  div[data-toc] > ul > li > a,
+  .table-of-contents nav > ul > li > a,
+  .table-of-contents > ul > li > a,
+  .right-sidebar-toc nav > ul > li > a,
+  .right-sidebar-toc > ul > li > a,
+  aside.toc nav > ul > li > a,
+  aside.toc > ul > li > a,
+  .sidebar-secondary nav > ul > li > a,
+  .sidebar-secondary > ul > li > a,
+  .article-outline nav > ul > li > a,
+  .article-outline > ul > li > a {
+    font-size: 1.05rem !important;
   }
 }
 
 @media (max-width: 480px) {
-  .affix {
-    padding: var(--spacing-sm);
+  .affix,
+  .toc,
+  .article-nav,
+  .in-this-article,
+  div[data-toc],
+  .table-of-contents,
+  .right-sidebar-toc,
+  aside.toc,
+  .sidebar-secondary,
+  .article-outline {
+    padding: var(--spacing-sm) !important;
   }
   
-  .affix::before {
-    font-size: 1rem;
+  .affix::before,
+  .toc::before,
+  .article-nav::before,
+  .in-this-article::before,
+  div[data-toc]::before,
+  .table-of-contents::before,
+  .right-sidebar-toc::before,
+  aside.toc::before,
+  .sidebar-secondary::before,
+  .article-outline::before {
+    font-size: 1rem !important;
   }
   
-  .affix nav ul li a {
-    font-size: 0.95rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
+  .affix nav ul li a,
+  .affix ul li a,
+  .toc nav ul li a,
+  .toc ul li a,
+  .article-nav nav ul li a,
+  .article-nav ul li a,
+  .in-this-article nav ul li a,
+  .in-this-article ul li a,
+  div[data-toc] nav ul li a,
+  div[data-toc] ul li a,
+  .table-of-contents nav ul li a,
+  .table-of-contents ul li a,
+  .right-sidebar-toc nav ul li a,
+  .right-sidebar-toc ul li a,
+  aside.toc nav ul li a,
+  aside.toc ul li a,
+  .sidebar-secondary nav ul li a,
+  .sidebar-secondary ul li a,
+  .article-outline nav ul li a,
+  .article-outline ul li a {
+    font-size: 0.95rem !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
   }
   
-  .affix nav > ul > li > a {
-    font-size: 1rem;
-  }
-  
-  .affix nav ul ul li a {
-    font-size: 0.9rem;
-    padding-left: var(--spacing-sm);
+  .affix nav > ul > li > a,
+  .affix > ul > li > a,
+  .toc nav > ul > li > a,
+  .toc > ul > li > a,
+  .article-nav nav > ul > li > a,
+  .article-nav > ul > li > a,
+  .in-this-article nav > ul > li > a,
+  .in-this-article > ul > li > a,
+  div[data-toc] nav > ul > li > a,
+  div[data-toc] > ul > li > a,
+  .table-of-contents nav > ul > li > a,
+  .table-of-contents > ul > li > a,
+  .right-sidebar-toc nav > ul > li > a,
+  .right-sidebar-toc > ul > li > a,
+  aside.toc nav > ul > li > a,
+  aside.toc > ul > li > a,
+  .sidebar-secondary nav > ul > li > a,
+  .sidebar-secondary > ul > li > a,
+  .article-outline nav > ul > li > a,
+  .article-outline > ul > li > a {
+    font-size: 1rem !important;
   }
 }
 
-/* Desktop TOC positioning */
+/* Desktop TOC positioning for all selectors */
 @media (min-width: 1200px) {
-  .affix {
-    width: 320px;
-    min-width: 320px;
+  .affix,
+  .toc,
+  .article-nav,
+  .in-this-article,
+  div[data-toc],
+  .table-of-contents,
+  .right-sidebar-toc,
+  aside.toc,
+  .sidebar-secondary,
+  .article-outline {
+    width: 320px !important;
+    min-width: 320px !important;
   }
   
-  .affix nav ul li a {
-    font-size: 1.1rem;
+  .affix nav ul li a,
+  .affix ul li a,
+  .toc nav ul li a,
+  .toc ul li a,
+  .article-nav nav ul li a,
+  .article-nav ul li a,
+  .in-this-article nav ul li a,
+  .in-this-article ul li a,
+  div[data-toc] nav ul li a,
+  div[data-toc] ul li a,
+  .table-of-contents nav ul li a,
+  .table-of-contents ul li a,
+  .right-sidebar-toc nav ul li a,
+  .right-sidebar-toc ul li a,
+  aside.toc nav ul li a,
+  aside.toc ul li a,
+  .sidebar-secondary nav ul li a,
+  .sidebar-secondary ul li a,
+  .article-outline nav ul li a,
+  .article-outline ul li a {
+    font-size: 1.1rem !important;
   }
   
-  .affix nav > ul > li > a {
-    font-size: 1.2rem;
-  }
-  
-  .affix nav ul ul li a {
-    font-size: 1.05rem;
+  .affix nav > ul > li > a,
+  .affix > ul > li > a,
+  .toc nav > ul > li > a,
+  .toc > ul > li > a,
+  .article-nav nav > ul > li > a,
+  .article-nav > ul > li > a,
+  .in-this-article nav > ul > li > a,
+  .in-this-article > ul > li > a,
+  div[data-toc] nav > ul > li > a,
+  div[data-toc] > ul > li > a,
+  .table-of-contents nav > ul > li > a,
+  .table-of-contents > ul > li > a,
+  .right-sidebar-toc nav > ul > li > a,
+  .right-sidebar-toc > ul > li > a,
+  aside.toc nav > ul > li > a,
+  aside.toc > ul > li > a,
+  .sidebar-secondary nav > ul > li > a,
+  .sidebar-secondary > ul > li > a,
+  .article-outline nav > ul > li > a,
+  .article-outline > ul > li > a {
+    font-size: 1.2rem !important;
   }
 }
 
