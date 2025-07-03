@@ -1,4 +1,5 @@
 /* PowerShell Enterprise Automation Platform - Custom Styling */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap');
 
 :root {
   /* PowerShell Brand Colors */
@@ -19,7 +20,7 @@
   --theme-link: var(--ps-primary);
   
   /* Typography */
-  --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+  --font-primary: 'Noto Sans', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   --font-mono: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
   
   /* Spacing */

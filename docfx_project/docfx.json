@@ -31,10 +31,10 @@
         ]
       }
     ],
-    "output": "_site",
+    "dest": "_site",
     "template": [
       "default",
-      "templates/modern"
+      "modern"
     ],
     "globalMetadata": {
       "_appName": "PowerShell Enterprise Automation Platform",

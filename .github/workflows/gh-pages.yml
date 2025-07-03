@@ -1,0 +1,64 @@
+# .github/workflows/gh-pages.yml
+
+name: 'Deploy Documentation to GitHub Pages'
+
+# Run this workflow every time a change is pushed to the `main` branch
+on:
+  push:
+    branches:
+      - main
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the repository so the job can access it
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+
+      # 2. Setup .NET SDK, which is required to run DocFX
+      - name: 'Setup .NET'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x' # Use a recent .NET version
+
+      # 3. Install the DocFX tool globally
+      - name: 'Install DocFX'
+        run: dotnet tool update -g docfx
+
+      # 4. Build the documentation site
+      # The `docfx build` command reads the docfx.json file,
+      # processes the source files (PowerShell modules and Markdown),
+      # and generates the static HTML site in the `_site` directory.
+      - name: 'Build Documentation'
+        run: cd docfx_project && docfx build
+
+      # 5. Configure GitHub Pages
+      - name: 'Setup Pages'
+        uses: actions/configure-pages@v5
+
+      # 6. Upload the generated site as a build artifact
+      # This action uploads the `_site` directory, which contains the
+      # complete static website, so it can be deployed by GitHub Pages.
+      - name: 'Upload artifact'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docfx_project/_site'
+
+      # 7. Deploy the artifact to GitHub Pages
+      # This action takes the uploaded artifact and deploys it.
+      # The site will be available at the URL shown in the environment summary.
+      - name: 'Deploy to GitHub Pages'
+        id: deployment
+        uses: actions/deploy-pages@v4

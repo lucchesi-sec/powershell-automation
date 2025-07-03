@@ -88,39 +88,11 @@ Shared enterprise functions used across all scripts:
 
 
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-### 1. Import Core Module
-```powershell
-Import-Module .\modules\PSAdminCore\PSAdminCore.psm1
-```
+For a fast-tracked, 30-minute introduction to the platform, please see our **[Quick-Start Guide](docs/QUICK_START.md)**.
 
-### 2. Enterprise Administration
-```powershell
-# Navigate to administration scripts
-cd scripts\administration
-
-# Bulk user creation
-.\New-ADUserBulk.ps1 -CsvPath "C:\NewUsers.csv" -OrganizationalUnit "OU=Users,DC=company,DC=com"
-
-# Automated backup
-.\Start-AutomatedBackup.ps1 -BackupConfigPath "C:\BackupConfig.json" -EmailReport
-
-# Backup health monitoring
-.\Get-BackupHealthReport.ps1 -BackupPath "\\backup-server\backups" -GenerateDashboard
-```
-
-### 3. Legacy Security Operations
-```powershell
-# Navigate to legacy scripts
-cd scripts\legacy
-
-# System information gathering
-.\Get-SystemInfo.ps1 | ConvertTo-Json | Out-File system-info.json
-
-# Security monitoring
-.\Find-SuspiciousProcess.ps1 -IncludeNetworkConnections
-```
+This guide will walk you through a minimal, secure deployment to get your first automation running in under 30 minutes.
 
 ## 🎯 Enterprise Features
 
@@ -249,9 +221,22 @@ The platform provides comprehensive metrics and reporting:
 - **Access Control**: Implement role-based access and least privilege principles
 - **Audit Logging**: Enable comprehensive audit logging for compliance
 
+## 📚 Documentation
+
+Comprehensive documentation is a core part of the PowerShell Enterprise Automation Platform. Our documentation follows a docs-as-code approach to ensure it remains up-to-date with the codebase:
+- **[Quick-Start Guide](docs/QUICK_START.md)**: Your first automation in 30 minutes.
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)**: Full production deployment instructions.
+- **[Troubleshooting & FAQ](docs/TROUBLESHOOTING.md)**: Resolve common issues and get answers to frequently asked questions.
+- **[Architecture Guide](docs/ARCHITECTURE.md)**: Detailed overview of the platform's design and structure.
+- **[Module Guide](docs/MODULE_GUIDE.md)**: A deep dive into the platform's modules.
+- **[Contributing Guidelines](CONTRIBUTING.md)**: Instructions for contributing to the project.
+- **[Docs-as-Code Framework](docs/DOCS_AS_CODE.md)**: Strategy for managing documentation as part of the development process.
+
+Maintaining documentation is a shared responsibility. Roles and responsibilities are defined in our [Docs-as-Code Framework](docs/DOCS_AS_CODE.md#roles-and-responsibilities).
+
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow enterprise development standards:
+Contributions are welcome! Please follow enterprise development standards outlined in our [Contributing Guidelines](CONTRIBUTING.md):
 
 1. Fork the repository and create feature branches
 2. Implement comprehensive error handling and logging
@@ -260,7 +245,7 @@ Contributions are welcome! Please follow enterprise development standards:
 5. Follow PowerShell best practices and coding standards
 6. Test in enterprise environments before submission
 
-## 📄 License
+## � License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 

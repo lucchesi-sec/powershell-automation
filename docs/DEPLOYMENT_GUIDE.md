@@ -35,7 +35,7 @@ Install-Module Pester -Force             # For testing framework
 #### Step 1: Download and Extract
 ```powershell
 # Clone or download the repository
-git clone https://github.com/company/powershell-automation.git
+git clone https://github.com/lucchesi-sec/powershell-automation.git
 cd powershell-automation
 
 # Verify file integrity
