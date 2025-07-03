@@ -30,3 +30,7 @@ Pester/
 *.pem
 *.key
 local.settings.json
+
+# Ignore DocFX output
+/_site/
+/docfx_project/_site/

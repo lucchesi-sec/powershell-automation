@@ -1,0 +1,12 @@
+- name: Quick Start
+  href: QUICK_START.md
+- name: Architecture
+  href: ARCHITECTURE.md
+- name: Deployment Guide
+  href: DEPLOYMENT_GUIDE.md
+- name: Module Guide
+  href: MODULE_GUIDE.md
+- name: Troubleshooting
+  href: TROUBLESHOOTING.md
+- name: Docs-as-Code
+  href: DOCS_AS_CODE.md

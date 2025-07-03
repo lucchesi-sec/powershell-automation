@@ -1,0 +1,38 @@
+{{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
+
+{{#_tocNav}}
+<ul class="navbar-nav me-auto">
+  {{#children}}
+  {{^leaf}}
+  <li class="nav-item dropdown">
+    {{#items}}
+    {{#topicHref}}
+    <a class="nav-link dropdown-toggle" href="{{_rel}}{{{topicHref}}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{^name}}{{uid}}{{/name}}{{name}}
+    </a>
+    {{/topicHref}}
+    {{^topicHref}}
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{^name}}{{uid}}{{/name}}{{name}}
+    </a>
+    {{/topicHref}}
+    {{/items}}
+    {{#children}}
+    <ul class="dropdown-menu">
+      {{#items}}
+      <li><a class="dropdown-item" href="{{_rel}}{{{topicHref}}}">{{^name}}{{uid}}{{/name}}{{name}}</a></li>
+      {{/items}}
+    </ul>
+    {{/children}}
+  </li>
+  {{/leaf}}
+  {{#leaf}}
+  <li class="nav-item">
+    {{#items}}
+    <a class="nav-link" href="{{_rel}}{{{topicHref}}}">{{^name}}{{uid}}{{/name}}{{name}}</a>
+    {{/items}}
+  </li>
+  {{/leaf}}
+  {{/children}}
+</ul>
+{{/_tocNav}}
