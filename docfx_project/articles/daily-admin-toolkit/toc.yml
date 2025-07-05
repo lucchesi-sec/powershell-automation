@@ -1,0 +1,26 @@
+- name: Daily Admin Toolkit
+  href: index.md
+- name: Recipes
+  items:
+  - name: ActiveDirectory Recipes
+    href: recipes/activedirectory-recipes.md
+  - name: ServerManagement Recipes
+    href: recipes/servermanagement-recipes.md
+  - name: ServiceManagement Recipes
+    href: recipes/servicemanagement-recipes.md
+- name: Quick Reference
+  items:
+  - name: Command Reference
+    href: quick-reference/command-reference.md
+  - name: Parameter Guide
+    href: quick-reference/parameter-guide.md
+  - name: Error Codes
+    href: quick-reference/error-codes.md
+- name: Setup & Configuration
+  items:
+  - name: Prerequisites
+    href: setup/prerequisites.md
+  - name: Configuration
+    href: setup/configuration.md
+  - name: Security
+    href: setup/security.md

@@ -1,0 +1,55 @@
+{
+    "From": "automation@company.com",
+    "SmtpServer": "smtp.company.com",
+    "Port": 587,
+    "UseSsl": true,
+    "UseCredential": true,
+    "Recipients": {
+        "Administrators": [
+            "admin@company.com",
+            "sysadmin@company.com"
+        ],
+        "Security": [
+            "security@company.com",
+            "infosec@company.com"
+        ],
+        "Operations": [
+            "operations@company.com",
+            "itops@company.com"
+        ],
+        "Management": [
+            "it-manager@company.com",
+            "director@company.com"
+        ]
+    },
+    "Templates": {
+        "BackupSuccess": {
+            "Subject": "[SUCCESS] Backup Completed - {JobName}",
+            "Priority": "Normal"
+        },
+        "BackupFailure": {
+            "Subject": "[CRITICAL] Backup Failed - {JobName}",
+            "Priority": "High"
+        },
+        "SecurityAlert": {
+            "Subject": "[SECURITY] Security Alert - {AlertType}",
+            "Priority": "High"
+        },
+        "ComplianceReport": {
+            "Subject": "[COMPLIANCE] Weekly Compliance Report",
+            "Priority": "Normal"
+        },
+        "SystemHealth": {
+            "Subject": "[MONITORING] System Health Report",
+            "Priority": "Normal"
+        }
+    },
+    "Settings": {
+        "RetryAttempts": 3,
+        "RetryDelay": 30,
+        "RateLimitPerHour": 100,
+        "MaxAttachmentSizeMB": 25,
+        "IncludeHostname": true,
+        "IncludeTimestamp": true
+    }
+}

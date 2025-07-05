@@ -1,0 +1,12 @@
+- name: Home
+  href: index.md
+- name: Articles
+  href: articles/toc.yml
+- name: API Reference
+  items:
+  - name: Core Module
+    href: api/PSAdminCore/
+    topicHref: api/PSAdminCore/index.md
+  - name: Scripts
+    href: api/scripts/
+    topicHref: api/scripts/index.md

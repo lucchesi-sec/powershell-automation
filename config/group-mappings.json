@@ -1,0 +1,36 @@
+{
+    "Department": {
+        "IT": ["IT-Department", "VPN-Users", "Remote-Desktop-Users"],
+        "HR": ["HR-Department", "Confidential-Access", "Employee-Records"],
+        "Finance": ["Finance-Department", "Financial-Systems", "Accounting-Software"],
+        "Sales": ["Sales-Department", "CRM-Users", "Customer-Data"],
+        "Marketing": ["Marketing-Department", "Marketing-Tools", "Social-Media"],
+        "Engineering": ["Engineering-Department", "Development-Tools", "Code-Repository"],
+        "Operations": ["Operations-Department", "Infrastructure-Access", "Monitoring-Tools"]
+    },
+    "Title": {
+        "Manager": ["Managers-Group", "Leadership-Team"],
+        "Director": ["Directors-Group", "Senior-Leadership"],
+        "VP": ["VP-Group", "Executive-Team"],
+        "Administrator": ["Administrators", "IT-Admins"],
+        "Developer": ["Developers", "Code-Access"],
+        "Analyst": ["Analysts", "Data-Access"],
+        "Coordinator": ["Coordinators", "Project-Access"]
+    },
+    "City": {
+        "New York": ["NYC-Office", "East-Coast"],
+        "Los Angeles": ["LA-Office", "West-Coast"],
+        "Chicago": ["Chicago-Office", "Central"],
+        "Remote": ["Remote-Workers", "VPN-Required"]
+    },
+    "Company": {
+        "Headquarters": ["Corporate-Access", "Full-Resources"],
+        "Subsidiary": ["Limited-Access", "Regional-Resources"]
+    },
+    "EmployeeType": {
+        "FullTime": ["Full-Time-Employees", "Benefits-Eligible"],
+        "PartTime": ["Part-Time-Employees", "Limited-Access"],
+        "Contractor": ["Contractors", "External-Access"],
+        "Intern": ["Interns", "Training-Access"]
+    }
+}

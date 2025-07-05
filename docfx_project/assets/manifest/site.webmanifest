@@ -1,0 +1,27 @@
+{
+    "name": "PowerShell Enterprise Automation Platform",
+    "short_name": "PS Enterprise",
+    "description": "Comprehensive PowerShell automation platform for enterprise Windows system administration, cybersecurity operations, and IT infrastructure management.",
+    "icons": [
+        {
+            "src": "assets/powershell-logo.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "favicon.ico",
+            "sizes": "16x16 32x32 48x48",
+            "type": "image/x-icon"
+        }
+    ],
+    "theme_color": "#0078D4",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "orientation": "portrait-primary",
+    "categories": ["development", "utilities", "productivity"],
+    "lang": "en-US",
+    "dir": "ltr"
+}

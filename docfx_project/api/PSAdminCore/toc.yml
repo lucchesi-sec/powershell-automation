@@ -1,0 +1,16 @@
+- name: Overview
+  href: index.md
+- name: Functions
+  items:
+  - name: Get-AdminCredential
+    href: Get-AdminCredential.md
+  - name: New-AdminReport
+    href: New-AdminReport.md
+  - name: Send-AdminNotification
+    href: Send-AdminNotification.md
+  - name: Test-AdminParameter
+    href: Test-AdminParameter.md
+  - name: Test-AdminPrivileges
+    href: Test-AdminPrivileges.md
+  - name: Write-AdminLog
+    href: Write-AdminLog.md

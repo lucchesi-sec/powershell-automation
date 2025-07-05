@@ -1,0 +1,96 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "index.md",
+          "toc.yml"
+        ]
+      },
+      {
+        "files": [
+          "**/*.md",
+          "toc.yml"
+        ],
+        "src": "articles",
+        "dest": "articles"
+      },
+      {
+        "files": [
+          "**/*.md",
+          "toc.yml"
+        ],
+        "src": "api",
+        "dest": "api"
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "assets/img/**",
+          "assets/manifest/**",
+          "assets/*.svg"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "PowerShell Enterprise Automation Platform",
+      "_appTitle": "PowerShell Enterprise Automation Platform",
+      "_appFooter": "PowerShell Enterprise Automation Platform - Streamline your IT operations",
+      "_enableSearch": true,
+      "_enableNewTab": true,
+      "_disableContribution": false,
+      "_gitContribute": {
+        "repo": "https://github.com/lucchesi-sec/powershell-automation",
+        "branch": "main"
+      },
+      "_description": "Comprehensive PowerShell automation platform for enterprise Windows system administration, cybersecurity operations, and IT infrastructure management.",
+      "_keywords": "PowerShell, automation, enterprise, system administration, cybersecurity, IT infrastructure, Windows, Active Directory, backup, monitoring",
+      "_author": "PowerShell Enterprise Team",
+      "_locale": "en-US",
+      "_enableResponsive": true,
+      "_mobileBreakpoint": "768px",
+      "_baseUrl": "/powershell-automation/",
+      "_appLogoPath": "assets/powershell-logo.svg",
+      "_appFaviconPath": "assets/powershell-logo.svg"
+    },
+    "markdownEngineName": "markdig",
+    "markdownEngineProperties": {
+      "markdigExtensions": [
+        "abbreviations",
+        "autoidentifiers", 
+        "autolinks",
+        "bootstrap",
+        "citations",
+        "customcontainers",
+        "definitionlists",
+        "diagrams",
+        "emphasisextras",
+        "figures",
+        "footers",
+        "footnotes",
+        "gridtables",
+        "mathematics",
+        "medialinks",
+        "pipetables",
+        "smartypants",
+        "tasklists",
+        "yaml"
+      ],
+      "diagrams": {
+        "enable": true,
+        "mermaid": {
+          "enable": true
+        }
+      }
+    },
+    "postProcessors": ["ExtractSearchIndex"],
+    "keepFileLink": false,
+    "cleanupCacheHistory": false
+  }
+}

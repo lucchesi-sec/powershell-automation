@@ -1,0 +1,17 @@
+- name: Getting Started
+  href: getting-started.md
+- name: Quick Start Guide
+  href: QUICK_START.md
+- name: Architecture
+  href: ARCHITECTURE.md
+- name: Module Guide
+  href: MODULE_GUIDE.md
+- name: Deployment Guide
+  href: DEPLOYMENT_GUIDE.md
+- name: Configuration
+  href: configuration.md
+- name: Documentation as Code
+  href: DOCS_AS_CODE.md
+- name: Daily Admin Toolkit
+  href: daily-admin-toolkit/toc.yml
+  topicHref: daily-admin-toolkit/index.md
