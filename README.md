@@ -1,7 +1,7 @@
 <div align="center">
   <img src="powershell-logo.svg" alt="PowerShell Logo" width="120" height="120">
   
-  # PowerShell Automation
+  # PowerShell Automation Toolkit
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://docs.microsoft.com/en-us/powershell/)
