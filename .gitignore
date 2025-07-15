@@ -4,8 +4,6 @@
 *.dll
 *.exe
 *.psc1
-*.psd1
-*.psm1
 *.ps1.lock
 *.log
 *.zip
@@ -17,7 +15,6 @@ Thumbs.db
 Desktop.ini
 
 # Modules folder (if you download modules locally)
-Modules/
 Pester/
 
 # VS Code
