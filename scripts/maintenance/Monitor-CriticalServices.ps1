@@ -69,22 +69,22 @@ $RestartAttempts = @{}
 # Default critical services configuration
 $DefaultServices = @{
     "Critical" = @(
-        @{ Name = "Spooler"; DisplayName = "Print Spooler"; Dependencies = @() },
-        @{ Name = "Themes"; DisplayName = "Themes"; Dependencies = @() },
-        @{ Name = "AudioSrv"; DisplayName = "Windows Audio"; Dependencies = @("AudioEndpointBuilder") },
-        @{ Name = "BITS"; DisplayName = "Background Intelligent Transfer Service"; Dependencies = @() },
+        @{ Name = "Spooler"; DisplayName = "Print Spooler"; Dependencies = @() }
+        @{ Name = "Themes"; DisplayName = "Themes"; Dependencies = @() }
+        @{ Name = "AudioSrv"; DisplayName = "Windows Audio"; Dependencies = @("AudioEndpointBuilder") }
+        @{ Name = "BITS"; DisplayName = "Background Intelligent Transfer Service"; Dependencies = @() }
         @{ Name = "EventLog"; DisplayName = "Windows Event Log"; Dependencies = @() }
-    ),
+    )
     "Infrastructure" = @(
-        @{ Name = "Dhcp"; DisplayName = "DHCP Client"; Dependencies = @() },
-        @{ Name = "Dnscache"; DisplayName = "DNS Client"; Dependencies = @() },
-        @{ Name = "LanmanWorkstation"; DisplayName = "Workstation"; Dependencies = @("NSI") },
-        @{ Name = "LanmanServer"; DisplayName = "Server"; Dependencies = @() },
+        @{ Name = "Dhcp"; DisplayName = "DHCP Client"; Dependencies = @() }
+        @{ Name = "Dnscache"; DisplayName = "DNS Client"; Dependencies = @() }
+        @{ Name = "LanmanWorkstation"; DisplayName = "Workstation"; Dependencies = @("NSI") }
+        @{ Name = "LanmanServer"; DisplayName = "Server"; Dependencies = @() }
         @{ Name = "RpcSs"; DisplayName = "Remote Procedure Call (RPC)"; Dependencies = @() }
-    ),
+    )
     "Application" = @(
-        @{ Name = "W3SVC"; DisplayName = "World Wide Web Publishing Service"; Dependencies = @("HTTP") },
-        @{ Name = "MSSQLSERVER"; DisplayName = "SQL Server"; Dependencies = @() },
+        @{ Name = "W3SVC"; DisplayName = "World Wide Web Publishing Service"; Dependencies = @("HTTP") }
+        @{ Name = "MSSQLSERVER"; DisplayName = "SQL Server"; Dependencies = @() }
         @{ Name = "SQLSERVERAGENT"; DisplayName = "SQL Server Agent"; Dependencies = @("MSSQLSERVER") }
     )
 }
@@ -464,5 +464,5 @@ finally {
     
     # Generate final health report
     $finalReport = Generate-HealthReport -ServiceConfig $serviceConfig
-    return $finalReport
+    Write-Output $finalReport
 }

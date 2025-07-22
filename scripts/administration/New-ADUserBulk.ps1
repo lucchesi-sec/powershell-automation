@@ -32,6 +32,7 @@
 #>
 
 [CmdletBinding()]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification='Plain text passwords are required for bulk user creation from CSV files and password generation')]
 param(
     [Parameter(Mandatory = $true)]
     [ValidateScript({Test-Path $_ -PathType Leaf})]

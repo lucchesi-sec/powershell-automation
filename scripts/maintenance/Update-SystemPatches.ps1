@@ -593,8 +593,8 @@ catch {
 finally {
     Write-UpdateLog "=== Windows Update Process Completed ==="
     
-    # Return final status
-    return @{
+    # Output final status
+    Write-Output @{
         UpdatesProcessed = if ($availableUpdates) { $availableUpdates.Count } else { 0 }
         RebootRequired = $script:RebootRequired
         LogFile = $LogFile

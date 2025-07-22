@@ -36,6 +36,7 @@
 #>
 
 [CmdletBinding()]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification='Plain text passwords are required for bulk password reset operations')]
 param(
     [Parameter(Mandatory = $false)]
     [string]$CsvPath,
