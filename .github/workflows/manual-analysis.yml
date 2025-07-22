@@ -23,7 +23,7 @@ on:
         description: 'Also analyze .ps1 script files'
         required: false
         type: boolean
-        default: false
+        default: true
       specific_path:
         description: 'Specific path to analyze (leave empty for all)'
         required: false

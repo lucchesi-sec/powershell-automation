@@ -1,6 +1,6 @@
 # PowerShell CI/CD Pipeline
 # This workflow runs automated code quality checks using PSScriptAnalyzer
-# on all PowerShell module files (.psm1) when code is pushed to main branch
+# on all PowerShell files (.ps1/.psm1) when code is pushed to main branch
 
 name: PowerShell CI Pipeline
 
@@ -79,28 +79,28 @@ jobs:
           }
           Write-Host "::endgroup::"
 
-      # Step 4: Discover PowerShell modules
-      - name: 🔍 Discover PowerShell Modules
+      # Step 4: Discover PowerShell files
+      - name: 🔍 Discover PowerShell Files
         id: discover-modules
         shell: pwsh
         run: |
-          Write-Host "::group::Discovering PowerShell modules"
-          $modules = Get-ChildItem -Path . -Include *.psm1 -Recurse -File | 
+          Write-Host "::group::Discovering PowerShell files"
+          $psFiles = Get-ChildItem -Path . -Include *.ps1,*.psm1 -Recurse -File | 
             Where-Object { $_.FullName -notmatch '[\\/](test|tests|\.github)[\\/]' }
           
-          if ($modules.Count -eq 0) {
-            Write-Host "::warning::No PowerShell module files (.psm1) found in repository"
+          if ($psFiles.Count -eq 0) {
+            Write-Host "::warning::No PowerShell files (.ps1/.psm1) found in repository"
             echo "module_count=0" >> $env:GITHUB_OUTPUT
           } else {
-            Write-Host "Found $($modules.Count) module(s) to analyze:"
-            $modules | ForEach-Object { 
+            Write-Host "Found $($psFiles.Count) PowerShell file(s) to analyze:"
+            $psFiles | ForEach-Object { 
               Write-Host "  📄 $($_.FullName.Replace($PWD, '.'))"
             }
-            echo "module_count=$($modules.Count)" >> $env:GITHUB_OUTPUT
+            echo "module_count=$($psFiles.Count)" >> $env:GITHUB_OUTPUT
             
-            # Save module paths for next step
-            $modulePaths = $modules.FullName -join "`n"
-            $modulePaths | Out-File -FilePath "discovered-modules.txt" -Encoding UTF8
+            # Save file paths for next step
+            $filePaths = $psFiles.FullName -join "`n"
+            $filePaths | Out-File -FilePath "discovered-modules.txt" -Encoding UTF8
           }
           Write-Host "::endgroup::"
 
@@ -117,10 +117,10 @@ jobs:
           $warningCount = 0
           $infoCount = 0
           
-          # Read discovered modules
+          # Read discovered PowerShell files
           $modulePaths = Get-Content -Path "discovered-modules.txt"
           
-          # Analyze each module
+          # Analyze each PowerShell file
           foreach ($modulePath in $modulePaths) {
             Write-Host "`n📋 Analyzing: $($modulePath.Replace($PWD, '.'))"
             Write-Host "=" * 60
@@ -206,7 +206,7 @@ jobs:
           ## Summary
           
           - **PSScriptAnalyzer Version:** ${{ steps.install-analyzer.outputs.analyzer_version }}
-          - **Modules Analyzed:** ${{ steps.discover-modules.outputs.module_count }}
+          - **PowerShell Files Analyzed:** ${{ steps.discover-modules.outputs.module_count }}
           - **Total Issues Found:** ${{ steps.run-analysis.outputs.total_issues || '0' }}
           - **Errors:** ${{ steps.run-analysis.outputs.error_count || '0' }}
           - **Warnings:** ${{ steps.run-analysis.outputs.warning_count || '0' }}
