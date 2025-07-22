@@ -1,0 +1,21 @@
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Local test outputs
+test-results/
+analysis-report*.md
+discovered-modules*.txt
+
+# IDE specific files
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.orig

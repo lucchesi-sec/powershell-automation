@@ -7,6 +7,7 @@
   [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://docs.microsoft.com/en-us/powershell/)
   [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
   [![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-brightgreen.svg)](https://lucchesi-sec.github.io/powershell-automation/)
+  [![PowerShell CI](https://github.com/lucchesi-sec/powershell-automation/actions/workflows/powershell-ci.yml/badge.svg)](https://github.com/lucchesi-sec/powershell-automation/actions/workflows/powershell-ci.yml)
   
   [![GitHub last commit](https://img.shields.io/github/last-commit/lucchesi-sec/powershell-automation.svg)](https://github.com/lucchesi-sec/powershell-automation/commits/main)
   [![GitHub issues](https://img.shields.io/github/issues/lucchesi-sec/powershell-automation.svg)](https://github.com/lucchesi-sec/powershell-automation/issues)

@@ -1,0 +1,326 @@
+# PowerShell CI/CD Pipeline
+# This workflow runs automated code quality checks using PSScriptAnalyzer
+# on all PowerShell module files (.psm1) when code is pushed to main branch
+
+name: PowerShell CI Pipeline
+
+# Workflow triggers
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allow manual trigger for testing
+
+# Environment variables
+env:
+  POWERSHELL_TELEMETRY_OPTOUT: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+# Jobs definition
+jobs:
+  # Job: Code Analysis with PSScriptAnalyzer
+  analyze-code:
+    name: PSScriptAnalyzer Code Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # Default timeout as specified in PRD
+    
+    steps:
+      # Step 1: Checkout repository code
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for better analysis context
+
+      # Step 2: Setup PowerShell environment
+      - name: 🔧 Setup PowerShell
+        shell: pwsh
+        run: |
+          Write-Host "PowerShell Environment Information:"
+          Write-Host "=================================="
+          Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
+          Write-Host "Platform: $($PSVersionTable.Platform)"
+          Write-Host "OS: $($PSVersionTable.OS)"
+          Write-Host "PSModulePath: $env:PSModulePath"
+          Write-Host ""
+
+      # Step 3: Install PSScriptAnalyzer
+      - name: 📦 Install PSScriptAnalyzer
+        id: install-analyzer
+        shell: pwsh
+        run: |
+          Write-Host "::group::Installing PSScriptAnalyzer"
+          try {
+            # Use the existing installation script if available
+            $installScript = "./scripts/pipeline/Install-PSScriptAnalyzer.ps1"
+            if (Test-Path $installScript) {
+              Write-Host "Using project installation script..."
+              & $installScript -SkipPublisherCheck
+            } else {
+              Write-Host "Installing PSScriptAnalyzer from PowerShell Gallery..."
+              Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force -SkipPublisherCheck
+            }
+            
+            # Verify installation
+            $module = Get-Module -ListAvailable -Name PSScriptAnalyzer | Select-Object -First 1
+            if ($module) {
+              Write-Host "✅ PSScriptAnalyzer $($module.Version) installed successfully"
+              Import-Module PSScriptAnalyzer
+              $ruleCount = (Get-ScriptAnalyzerRule).Count
+              Write-Host "📋 Available analysis rules: $ruleCount"
+              echo "analyzer_version=$($module.Version)" >> $env:GITHUB_OUTPUT
+            } else {
+              throw "PSScriptAnalyzer installation verification failed"
+            }
+          }
+          catch {
+            Write-Host "::error::Failed to install PSScriptAnalyzer: $_"
+            exit 1
+          }
+          Write-Host "::endgroup::"
+
+      # Step 4: Discover PowerShell modules
+      - name: 🔍 Discover PowerShell Modules
+        id: discover-modules
+        shell: pwsh
+        run: |
+          Write-Host "::group::Discovering PowerShell modules"
+          $modules = Get-ChildItem -Path . -Include *.psm1 -Recurse -File | 
+            Where-Object { $_.FullName -notmatch '[\\/](test|tests|\.github)[\\/]' }
+          
+          if ($modules.Count -eq 0) {
+            Write-Host "::warning::No PowerShell module files (.psm1) found in repository"
+            echo "module_count=0" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Host "Found $($modules.Count) module(s) to analyze:"
+            $modules | ForEach-Object { 
+              Write-Host "  📄 $($_.FullName.Replace($PWD, '.'))"
+            }
+            echo "module_count=$($modules.Count)" >> $env:GITHUB_OUTPUT
+            
+            # Save module paths for next step
+            $modulePaths = $modules.FullName -join "`n"
+            $modulePaths | Out-File -FilePath "discovered-modules.txt" -Encoding UTF8
+          }
+          Write-Host "::endgroup::"
+
+      # Step 5: Run PSScriptAnalyzer
+      - name: 🔬 Run Code Analysis
+        id: run-analysis
+        if: steps.discover-modules.outputs.module_count != '0'
+        shell: pwsh
+        run: |
+          Write-Host "::group::Running PSScriptAnalyzer"
+          $hasErrors = $false
+          $totalIssues = 0
+          $errorCount = 0
+          $warningCount = 0
+          $infoCount = 0
+          
+          # Read discovered modules
+          $modulePaths = Get-Content -Path "discovered-modules.txt"
+          
+          # Analyze each module
+          foreach ($modulePath in $modulePaths) {
+            Write-Host "`n📋 Analyzing: $($modulePath.Replace($PWD, '.'))"
+            Write-Host "=" * 60
+            
+            try {
+              $results = Invoke-ScriptAnalyzer -Path $modulePath -Recurse -ReportSummary
+              
+              if ($results) {
+                foreach ($result in $results) {
+                  $totalIssues++
+                  $relativePath = $result.ScriptPath.Replace($PWD, '.')
+                  
+                  # Format GitHub annotation
+                  switch ($result.Severity) {
+                    'Error' {
+                      Write-Host "::error file=$relativePath,line=$($result.Line),col=$($result.Column)::[$($result.RuleName)] $($result.Message)"
+                      $errorCount++
+                      $hasErrors = $true
+                    }
+                    'Warning' {
+                      Write-Host "::warning file=$relativePath,line=$($result.Line),col=$($result.Column)::[$($result.RuleName)] $($result.Message)"
+                      $warningCount++
+                    }
+                    'Information' {
+                      Write-Host "::notice file=$relativePath,line=$($result.Line),col=$($result.Column)::[$($result.RuleName)] $($result.Message)"
+                      $infoCount++
+                    }
+                  }
+                  
+                  # Also output to console for logs
+                  Write-Host "$($result.Severity): $relativePath:$($result.Line):$($result.Column)"
+                  Write-Host "  Rule: $($result.RuleName)"
+                  Write-Host "  Message: $($result.Message)"
+                }
+              } else {
+                Write-Host "✅ No issues found"
+              }
+            }
+            catch {
+              Write-Host "::error::Failed to analyze $modulePath`: $_"
+              $hasErrors = $true
+            }
+          }
+          
+          # Summary
+          Write-Host "`n" + "=" * 60
+          Write-Host "📊 Analysis Summary:"
+          Write-Host "  Total Issues: $totalIssues"
+          Write-Host "  ❌ Errors: $errorCount"
+          Write-Host "  ⚠️  Warnings: $warningCount"
+          Write-Host "  ℹ️  Information: $infoCount"
+          Write-Host "=" * 60
+          
+          # Set outputs
+          echo "total_issues=$totalIssues" >> $env:GITHUB_OUTPUT
+          echo "error_count=$errorCount" >> $env:GITHUB_OUTPUT
+          echo "warning_count=$warningCount" >> $env:GITHUB_OUTPUT
+          echo "has_errors=$hasErrors" >> $env:GITHUB_OUTPUT
+          
+          Write-Host "::endgroup::"
+          
+          # Fail if errors were found
+          if ($hasErrors) {
+            Write-Host "::error::PSScriptAnalyzer found $errorCount error(s). Please fix them and push again."
+            exit 1
+          }
+
+      # Step 6: Generate analysis report
+      - name: 📊 Generate Analysis Report
+        if: always() && steps.discover-modules.outputs.module_count != '0'
+        shell: pwsh
+        run: |
+          Write-Host "::group::Generating analysis report"
+          
+          $report = @"
+          # PSScriptAnalyzer Report
+          
+          **Date:** $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+          **Triggered by:** ${{ github.actor }}
+          
+          ## Summary
+          
+          - **PSScriptAnalyzer Version:** ${{ steps.install-analyzer.outputs.analyzer_version }}
+          - **Modules Analyzed:** ${{ steps.discover-modules.outputs.module_count }}
+          - **Total Issues Found:** ${{ steps.run-analysis.outputs.total_issues || '0' }}
+          - **Errors:** ${{ steps.run-analysis.outputs.error_count || '0' }}
+          - **Warnings:** ${{ steps.run-analysis.outputs.warning_count || '0' }}
+          
+          ## Status
+          
+          ${{ steps.run-analysis.outputs.has_errors == 'true' && '❌ **FAILED** - Errors found in code analysis' || '✅ **PASSED** - No errors found' }}
+          
+          ## Next Steps
+          
+          ${{ steps.run-analysis.outputs.has_errors == 'true' && '1. Review the error annotations in the Files Changed tab
+          2. Fix the identified issues in your local environment
+          3. Run PSScriptAnalyzer locally to verify fixes
+          4. Push the corrected code to trigger a new analysis' || 'No action required - your code meets the quality standards!' }}
+          
+          ---
+          
+          [View Full Workflow Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          "@
+          
+          $report | Out-File -FilePath "analysis-report.md" -Encoding UTF8
+          Write-Host "Report generated: analysis-report.md"
+          Write-Host "::endgroup::"
+
+      # Step 7: Upload analysis artifacts
+      - name: 📤 Upload Analysis Artifacts
+        if: always() && steps.discover-modules.outputs.module_count != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: psscriptanalyzer-results
+          path: |
+            analysis-report.md
+            discovered-modules.txt
+          retention-days: 30
+
+      # Step 8: Comment on commit (only on failure)
+      - name: 💬 Comment on Commit
+        if: failure() && steps.run-analysis.outputs.has_errors == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('analysis-report.md', 'utf8');
+            
+            // Create a comment on the commit
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: report
+            });
+
+  # Job: Update README with status badge
+  update-badge:
+    name: Update Status Badge
+    runs-on: ubuntu-latest
+    needs: analyze-code
+    if: always() # Run even if analysis fails
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Update README Badge
+        shell: pwsh
+        run: |
+          $readmePath = "./README.md"
+          $readmeContent = Get-Content $readmePath -Raw
+          
+          # Badge markdown
+          $badgeUrl = "https://github.com/${{ github.repository }}/actions/workflows/powershell-ci.yml/badge.svg"
+          $workflowUrl = "https://github.com/${{ github.repository }}/actions/workflows/powershell-ci.yml"
+          $badge = "[![PowerShell CI]($badgeUrl)]($workflowUrl)"
+          
+          # Check if badge already exists
+          if ($readmeContent -notmatch '\[\!\[PowerShell CI\]') {
+            Write-Host "Adding CI badge to README.md"
+            
+            # Find the position after the title and existing badges
+            $pattern = '(?ms)(# PowerShell Automation Toolkit.*?)\n(\s*\n)'
+            if ($readmeContent -match $pattern) {
+              # Find the last badge line
+              $lines = $readmeContent -split "`n"
+              $lastBadgeIndex = -1
+              
+              for ($i = 0; $i -lt $lines.Count; $i++) {
+                if ($lines[$i] -match '^\s*\[\!\[.*\]\(.*\)\]\(.*\)\s*$') {
+                  $lastBadgeIndex = $i
+                }
+              }
+              
+              if ($lastBadgeIndex -ge 0) {
+                # Insert after the last badge
+                $lines = $lines[0..$lastBadgeIndex] + "  $badge" + $lines[($lastBadgeIndex + 1)..($lines.Count - 1)]
+                $readmeContent = $lines -join "`n"
+              }
+            }
+            
+            # Save updated README
+            $readmeContent | Set-Content $readmePath -NoNewline
+            
+            # Configure git
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            
+            # Commit and push if there are changes
+            git add README.md
+            $changes = git diff --staged --name-only
+            if ($changes) {
+              git commit -m "🏷️ Add PowerShell CI status badge [skip ci]"
+              git push
+            }
+          } else {
+            Write-Host "CI badge already exists in README.md"
+          }

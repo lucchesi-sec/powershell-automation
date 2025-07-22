@@ -1,0 +1,187 @@
+# Manual PowerShell Analysis Workflow
+# This workflow allows manual code analysis with customizable parameters
+
+name: Manual Code Analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      analyzer_version:
+        description: 'PSScriptAnalyzer version (leave empty for latest)'
+        required: false
+        type: string
+      severity_level:
+        description: 'Minimum severity level to report'
+        required: true
+        default: 'Error'
+        type: choice
+        options:
+          - Error
+          - Warning
+          - Information
+      include_scripts:
+        description: 'Also analyze .ps1 script files'
+        required: false
+        type: boolean
+        default: false
+      specific_path:
+        description: 'Specific path to analyze (leave empty for all)'
+        required: false
+        type: string
+
+env:
+  POWERSHELL_TELEMETRY_OPTOUT: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  manual-analysis:
+    name: Manual PSScriptAnalyzer Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Display Configuration
+        shell: pwsh
+        run: |
+          Write-Host "=== Manual Analysis Configuration ===" -ForegroundColor Cyan
+          Write-Host "Analyzer Version: ${{ github.event.inputs.analyzer_version || 'Latest' }}"
+          Write-Host "Severity Level: ${{ github.event.inputs.severity_level }}"
+          Write-Host "Include Scripts: ${{ github.event.inputs.include_scripts }}"
+          Write-Host "Specific Path: ${{ github.event.inputs.specific_path || 'All files' }}"
+          Write-Host "Triggered by: ${{ github.actor }}"
+          Write-Host "======================================" -ForegroundColor Cyan
+
+      - name: 📦 Install PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          $installParams = @{
+            Name = 'PSScriptAnalyzer'
+            Scope = 'CurrentUser'
+            Force = $true
+            SkipPublisherCheck = $true
+          }
+          
+          if ('${{ github.event.inputs.analyzer_version }}') {
+            $installParams['RequiredVersion'] = '${{ github.event.inputs.analyzer_version }}'
+          }
+          
+          Install-Module @installParams
+          Import-Module PSScriptAnalyzer
+          
+          $module = Get-Module PSScriptAnalyzer
+          Write-Host "✅ Installed PSScriptAnalyzer $($module.Version)"
+
+      - name: 🔍 Discover Files to Analyze
+        id: discover
+        shell: pwsh
+        run: |
+          $searchPath = if ('${{ github.event.inputs.specific_path }}') {
+            '${{ github.event.inputs.specific_path }}'
+          } else {
+            '.'
+          }
+          
+          $patterns = @('*.psm1')
+          if ('${{ github.event.inputs.include_scripts }}' -eq 'true') {
+            $patterns += '*.ps1'
+          }
+          
+          $files = @()
+          foreach ($pattern in $patterns) {
+            $files += Get-ChildItem -Path $searchPath -Filter $pattern -Recurse -File |
+              Where-Object { $_.FullName -notmatch '[\\/](test|tests|\.github)[\\/]' }
+          }
+          
+          Write-Host "Found $($files.Count) file(s) to analyze"
+          echo "file_count=$($files.Count)" >> $env:GITHUB_OUTPUT
+
+      - name: 🔬 Run Analysis
+        shell: pwsh
+        run: |
+          $severityLevel = '${{ github.event.inputs.severity_level }}'
+          $includeScripts = '${{ github.event.inputs.include_scripts }}' -eq 'true'
+          $searchPath = if ('${{ github.event.inputs.specific_path }}') {
+            '${{ github.event.inputs.specific_path }}'
+          } else {
+            '.'
+          }
+          
+          Write-Host "Running analysis with severity level: $severityLevel"
+          
+          $patterns = @('*.psm1')
+          if ($includeScripts) {
+            $patterns += '*.ps1'
+          }
+          
+          $allResults = @()
+          foreach ($pattern in $patterns) {
+            $files = Get-ChildItem -Path $searchPath -Filter $pattern -Recurse -File |
+              Where-Object { $_.FullName -notmatch '[\\/](test|tests|\.github)[\\/]' }
+            
+            foreach ($file in $files) {
+              Write-Host "`nAnalyzing: $($file.FullName.Replace($PWD, '.'))"
+              $results = Invoke-ScriptAnalyzer -Path $file.FullName -Severity $severityLevel
+              
+              if ($results) {
+                $allResults += $results
+                foreach ($result in $results) {
+                  $annotation = switch ($result.Severity) {
+                    'Error' { "::error" }
+                    'Warning' { "::warning" }
+                    'Information' { "::notice" }
+                  }
+                  
+                  $relativePath = $result.ScriptPath.Replace($PWD, '.')
+                  Write-Host "$annotation file=$relativePath,line=$($result.Line),col=$($result.Column)::[$($result.RuleName)] $($result.Message)"
+                }
+              }
+            }
+          }
+          
+          # Summary
+          $summary = $allResults | Group-Object Severity
+          Write-Host "`n=== Analysis Summary ==="
+          Write-Host "Total Issues: $($allResults.Count)"
+          foreach ($group in $summary) {
+            Write-Host "$($group.Name): $($group.Count)"
+          }
+
+      - name: 📊 Generate Report
+        if: always()
+        shell: pwsh
+        run: |
+          $report = @"
+          # Manual Analysis Report
+          
+          **Date:** $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+          **Triggered by:** ${{ github.actor }}
+          
+          ## Configuration
+          
+          - **PSScriptAnalyzer Version:** ${{ github.event.inputs.analyzer_version || 'Latest' }}
+          - **Severity Level:** ${{ github.event.inputs.severity_level }}
+          - **Include Scripts (.ps1):** ${{ github.event.inputs.include_scripts }}
+          - **Specific Path:** ${{ github.event.inputs.specific_path || 'All files' }}
+          - **Files Analyzed:** ${{ steps.discover.outputs.file_count }}
+          
+          ## Results
+          
+          See annotations in the workflow run for detailed findings.
+          
+          ---
+          
+          [View Workflow Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          "@
+          
+          $report | Out-File -FilePath "manual-analysis-report.md" -Encoding UTF8
+
+      - name: 📤 Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-analysis-report
+          path: manual-analysis-report.md
+          retention-days: 30

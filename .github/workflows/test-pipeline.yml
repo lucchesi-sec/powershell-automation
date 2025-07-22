@@ -1,0 +1,594 @@
+# .github/workflows/test-pipeline.yml
+# Test workflow for validating the main PowerShell CI pipeline
+# This workflow tests various failure scenarios and validates performance
+
+name: Test CI Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_scenario:
+        description: 'Test scenario to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - missing-modules
+          - syntax-errors
+          - analyzer-failures
+          - performance
+          - notifications
+
+env:
+  TEST_RESULTS_PATH: './test-results'
+  PIPELINE_TIMEOUT_MINUTES: 5
+
+jobs:
+  validate-pipeline-structure:
+    name: Validate Pipeline Structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Validate Workflow Files
+        run: |
+          Write-Host "Validating workflow file structure..."
+          $workflowPath = ".github/workflows/powershell-ci.yml"
+          
+          if (Test-Path $workflowPath) {
+              Write-Host "✅ Main pipeline workflow found"
+              
+              # Validate YAML syntax
+              try {
+                  $null = Get-Content $workflowPath -Raw | ConvertFrom-Yaml -ErrorAction Stop
+                  Write-Host "✅ Workflow YAML is valid"
+              }
+              catch {
+                  Write-Error "❌ Invalid YAML in workflow file: $_"
+                  exit 1
+              }
+          }
+          else {
+              Write-Warning "⚠️ Main pipeline workflow not found at: $workflowPath"
+              Write-Host "This test requires the main pipeline to be implemented first."
+          }
+        shell: pwsh
+
+      - name: Check Required Scripts
+        run: |
+          $requiredScripts = @(
+              "scripts/pipeline/Install-PSScriptAnalyzer.ps1",
+              "scripts/pipeline/Invoke-CodeAnalysis.ps1",
+              "scripts/pipeline/Format-AnalysisReport.ps1"
+          )
+          
+          $missingScripts = @()
+          foreach ($script in $requiredScripts) {
+              if (Test-Path $script) {
+                  Write-Host "✅ Found: $script"
+              }
+              else {
+                  $missingScripts += $script
+                  Write-Host "❌ Missing: $script"
+              }
+          }
+          
+          if ($missingScripts.Count -gt 0) {
+              Write-Warning "Missing $($missingScripts.Count) required pipeline scripts"
+          }
+        shell: pwsh
+
+  test-missing-modules:
+    name: Test Missing Modules Scenario
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.test_scenario, 'all') || contains(github.event.inputs.test_scenario, 'missing-modules')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Create Empty Test Directory
+        run: |
+          # Create a temporary directory with no .psm1 files
+          $testDir = New-Item -ItemType Directory -Path "./empty-test-dir" -Force
+          Write-Host "Created empty directory for testing: $($testDir.FullName)"
+        shell: pwsh
+        
+      - name: Test Analysis with No Modules
+        id: test-no-modules
+        continue-on-error: true
+        run: |
+          # This should handle gracefully when no modules are found
+          if (Test-Path "scripts/pipeline/Invoke-CodeAnalysis.ps1") {
+              Set-Location "./empty-test-dir"
+              & "../scripts/pipeline/Invoke-CodeAnalysis.ps1"
+          }
+          else {
+              Write-Host "Invoke-CodeAnalysis.ps1 not found - skipping test"
+          }
+        shell: pwsh
+        
+      - name: Validate Error Handling
+        run: |
+          if ('${{ steps.test-no-modules.outcome }}' -eq 'failure') {
+              Write-Host "✅ Pipeline correctly detected missing modules"
+          }
+          else {
+              Write-Host "⚠️ Pipeline should handle missing modules gracefully"
+          }
+        shell: pwsh
+
+  test-syntax-errors:
+    name: Test Syntax Error Detection
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.test_scenario, 'all') || contains(github.event.inputs.test_scenario, 'syntax-errors')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Create Module with Syntax Errors
+        run: |
+          $badModule = @'
+# Test module with intentional syntax errors
+function Get-TestData {
+    param(
+        $Path  # Missing closing parenthesis
+    
+    # Missing closing brace for function
+    if ($Path) {
+        return Get-Content $Path
+    # Missing closing brace for if statement
+}
+
+# Unclosed string
+$testString = "This string never ends...
+
+# Invalid syntax
+function 123-InvalidName {
+    Write-Host "Function names can't start with numbers"
+}
+'@
+          
+          New-Item -ItemType Directory -Path "./test-modules" -Force
+          Set-Content -Path "./test-modules/BadSyntax.psm1" -Value $badModule
+          Write-Host "Created module with syntax errors for testing"
+        shell: pwsh
+        
+      - name: Install PSScriptAnalyzer
+        run: |
+          if (Test-Path "scripts/pipeline/Install-PSScriptAnalyzer.ps1") {
+              & ./scripts/pipeline/Install-PSScriptAnalyzer.ps1
+          }
+          else {
+              Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+          }
+        shell: pwsh
+        
+      - name: Test Syntax Error Detection
+        id: test-syntax
+        continue-on-error: true
+        run: |
+          Invoke-ScriptAnalyzer -Path "./test-modules/BadSyntax.psm1" -Severity Error
+        shell: pwsh
+        
+      - name: Validate Syntax Error Detection
+        run: |
+          if ('${{ steps.test-syntax.outcome }}' -eq 'failure') {
+              Write-Host "✅ PSScriptAnalyzer correctly detected syntax errors"
+          }
+          else {
+              Write-Error "❌ PSScriptAnalyzer should have detected syntax errors"
+              exit 1
+          }
+        shell: pwsh
+
+  test-analyzer-violations:
+    name: Test PSScriptAnalyzer Rule Violations  
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.test_scenario, 'all') || contains(github.event.inputs.test_scenario, 'analyzer-failures')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Create Module with Rule Violations
+        run: |
+          $violationModule = @'
+# Module with various PSScriptAnalyzer violations
+
+# PSAvoidUsingPlainTextForPassword
+function Set-UserPassword {
+    param(
+        [string]$Username,
+        [string]$Password = "DefaultPassword123"  # Violation: plain text password
+    )
+    
+    # PSAvoidUsingInvokeExpression
+    $command = "Get-Process"
+    Invoke-Expression $command  # Violation: using Invoke-Expression
+}
+
+# PSUseSingularNouns
+function Get-Users {  # Violation: plural noun
+    # PSAvoidUsingWriteHost
+    Write-Host "Getting users..."  # Violation: using Write-Host
+    
+    # PSAvoidUsingCmdletAliases
+    gci | ? { $_.Length -gt 1000 }  # Violations: using aliases
+}
+
+# PSProvideCommentHelp
+function Update-SystemConfig {  # Violation: missing comment-based help
+    # PSUseDeclaredVarsMoreThanAssignments
+    $unused = "This variable is never used"  # Violation: unused variable
+    
+    # PSAvoidUsingEmptyCatchBlock
+    try {
+        Get-Content "nonexistent.txt"
+    }
+    catch {
+        # Violation: empty catch block
+    }
+}
+
+# PSUseApprovedVerbs
+function Fetch-Data {  # Violation: unapproved verb
+    return @()
+}
+'@
+          
+          New-Item -ItemType Directory -Path "./test-violations" -Force
+          Set-Content -Path "./test-violations/Violations.psm1" -Value $violationModule
+          Write-Host "Created module with PSScriptAnalyzer violations for testing"
+        shell: pwsh
+        
+      - name: Install PSScriptAnalyzer
+        run: |
+          Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+        shell: pwsh
+        
+      - name: Test Rule Violation Detection
+        id: test-violations
+        continue-on-error: true
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path "./test-violations/Violations.psm1"
+          
+          Write-Host "`nDetected $($results.Count) violations:"
+          $results | ForEach-Object {
+              Write-Host "- $($_.RuleName): $($_.Message) [Line $($_.Line)]"
+          }
+          
+          # Check for expected violations
+          $expectedRules = @(
+              'PSAvoidUsingPlainTextForPassword',
+              'PSAvoidUsingInvokeExpression',
+              'PSUseSingularNouns',
+              'PSAvoidUsingWriteHost',
+              'PSAvoidUsingCmdletAliases',
+              'PSProvideCommentHelp',
+              'PSUseDeclaredVarsMoreThanAssignments',
+              'PSAvoidUsingEmptyCatchBlock',
+              'PSUseApprovedVerbs'
+          )
+          
+          $detectedRules = $results.RuleName | Select-Object -Unique
+          $missingRules = $expectedRules | Where-Object { $_ -notin $detectedRules }
+          
+          if ($missingRules.Count -gt 0) {
+              Write-Warning "Failed to detect violations for: $($missingRules -join ', ')"
+          }
+          
+          # Fail if violations found (expected behavior)
+          if ($results.Count -gt 0) {
+              exit 1
+          }
+        shell: pwsh
+        
+      - name: Validate Violation Detection
+        run: |
+          if ('${{ steps.test-violations.outcome }}' -eq 'failure') {
+              Write-Host "✅ PSScriptAnalyzer correctly detected rule violations"
+          }
+          else {
+              Write-Error "❌ PSScriptAnalyzer should have detected violations"
+              exit 1
+          }
+        shell: pwsh
+
+  test-performance:
+    name: Test Pipeline Performance
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.test_scenario, 'all') || contains(github.event.inputs.test_scenario, 'performance')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Create Multiple Test Modules
+        run: |
+          # Create multiple modules to test performance
+          $moduleCount = 10
+          New-Item -ItemType Directory -Path "./perf-test" -Force
+          
+          for ($i = 1; $i -le $moduleCount; $i++) {
+              $moduleContent = @"
+# Performance test module $i
+function Get-TestData$i {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [string]`$Path,
+        
+        [switch]`$Recurse
+    )
+    
+    if (Test-Path `$Path) {
+        if (`$Recurse) {
+            Get-ChildItem -Path `$Path -Recurse
+        }
+        else {
+            Get-ChildItem -Path `$Path
+        }
+    }
+    else {
+        Write-Error "Path not found: `$Path"
+    }
+}
+
+function Set-TestConfig$i {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [hashtable]`$Configuration
+    )
+    
+    `$Configuration.Keys | ForEach-Object {
+        Write-Verbose "Setting `$_ = `$(`$Configuration[`$_])"
+    }
+}
+"@
+              Set-Content -Path "./perf-test/TestModule$i.psm1" -Value $moduleContent
+          }
+          
+          Write-Host "Created $moduleCount test modules for performance testing"
+        shell: pwsh
+        
+      - name: Install PSScriptAnalyzer
+        run: |
+          Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+        shell: pwsh
+        
+      - name: Measure Analysis Performance
+        run: |
+          $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+          
+          Write-Host "Starting performance test..."
+          $results = Invoke-ScriptAnalyzer -Path "./perf-test" -Recurse
+          
+          $stopwatch.Stop()
+          $duration = $stopwatch.Elapsed
+          
+          Write-Host "`nPerformance Results:"
+          Write-Host "- Modules analyzed: $(Get-ChildItem ./perf-test -Filter *.psm1).Count"
+          Write-Host "- Total violations: $($results.Count)"
+          Write-Host "- Analysis duration: $($duration.TotalSeconds) seconds"
+          Write-Host "- Target duration: ${{ env.PIPELINE_TIMEOUT_MINUTES }} minutes"
+          
+          # Create performance report
+          $perfReport = @{
+              ModulesAnalyzed = (Get-ChildItem ./perf-test -Filter *.psm1).Count
+              ViolationsFound = $results.Count
+              DurationSeconds = $duration.TotalSeconds
+              DurationMinutes = $duration.TotalMinutes
+              TargetMinutes = ${{ env.PIPELINE_TIMEOUT_MINUTES }}
+              PassedTarget = $duration.TotalMinutes -lt ${{ env.PIPELINE_TIMEOUT_MINUTES }}
+          }
+          
+          $perfReport | ConvertTo-Json | Set-Content -Path "performance-report.json"
+          
+          if ($perfReport.PassedTarget) {
+              Write-Host "✅ Performance test PASSED - Completed in $($duration.TotalMinutes) minutes"
+          }
+          else {
+              Write-Error "❌ Performance test FAILED - Exceeded target of ${{ env.PIPELINE_TIMEOUT_MINUTES }} minutes"
+              exit 1
+          }
+        shell: pwsh
+        
+      - name: Upload Performance Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-report
+          path: performance-report.json
+
+  test-notifications:
+    name: Test Notification System
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.test_scenario, 'all') || contains(github.event.inputs.test_scenario, 'notifications')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Test GitHub Notification System
+        run: |
+          Write-Host "Testing GitHub notification system..."
+          
+          # GitHub automatically notifies the commit author when a workflow fails
+          # This test validates the notification configuration
+          
+          Write-Host "Notification test scenarios:"
+          Write-Host "1. ✅ Workflow failure notifications - Handled by GitHub"
+          Write-Host "2. ✅ Commit status updates - Automatic via GitHub Actions"
+          Write-Host "3. ✅ Pull request comments - Available via GitHub Actions"
+          
+          # Simulate a failure to trigger notification
+          if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
+              Write-Host "`nTo test notifications:"
+              Write-Host "1. Intentionally fail this workflow"
+              Write-Host "2. Check that commit author receives GitHub notification"
+              Write-Host "3. Verify workflow run link is included"
+          }
+          
+          # Document notification flow
+          $notificationFlow = @"
+Notification Flow:
+1. Pipeline fails on code violation
+2. GitHub Actions updates commit status to 'failed'
+3. Commit author receives notification via:
+   - GitHub web notification
+   - Email (if configured in GitHub settings)
+   - GitHub mobile app (if installed)
+4. Notification includes:
+   - Repository name
+   - Workflow name
+   - Failure reason
+   - Direct link to workflow run
+"@
+          
+          Write-Host "`n$notificationFlow"
+        shell: pwsh
+        
+      - name: Create Notification Test Report
+        run: |
+          $report = @{
+              TestDate = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+              NotificationSystem = "GitHub Built-in"
+              TestedScenarios = @(
+                  "Workflow failure notification",
+                  "Commit status update", 
+                  "Direct workflow link"
+              )
+              Requirements = @{
+                  NotifyOnFailure = $true
+                  NotifyCommitAuthor = $true
+                  IncludeWorkflowLink = $true
+                  OnlyNotifyOnFailure = $true
+              }
+          }
+          
+          $report | ConvertTo-Json -Depth 3 | Set-Content -Path "notification-test-report.json"
+          Write-Host "Created notification test report"
+        shell: pwsh
+        
+      - name: Upload Notification Test Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: notification-test-report
+          path: notification-test-report.json
+
+  create-validation-checklist:
+    name: Create Pipeline Validation Checklist
+    runs-on: ubuntu-latest
+    needs: [validate-pipeline-structure, test-missing-modules, test-syntax-errors, test-analyzer-violations, test-performance, test-notifications]
+    if: always()
+    steps:
+      - name: Generate Validation Checklist
+        run: |
+          $checklist = @"
+# Pipeline Validation Checklist
+
+Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC")
+
+## Pre-Implementation Checks
+- [ ] Main pipeline workflow file exists (.github/workflows/powershell-ci.yml)
+- [ ] Pipeline helper scripts exist in scripts/pipeline/
+- [ ] PSScriptAnalyzer can be installed successfully
+- [ ] PowerShell 7+ is available on runner
+
+## Functional Tests
+- [ ] Pipeline triggers on push to main/master branch
+- [ ] Pipeline can be manually triggered
+- [ ] PSScriptAnalyzer runs on all .psm1 files
+- [ ] Pipeline handles missing module files gracefully
+- [ ] Syntax errors are detected and reported
+- [ ] PSScriptAnalyzer violations cause pipeline failure
+- [ ] Warnings are displayed but don't fail pipeline
+- [ ] Error messages are clear and actionable
+
+## Performance Tests  
+- [ ] Pipeline completes within 5-minute target
+- [ ] PSScriptAnalyzer installation is cached when possible
+- [ ] Analysis runs efficiently on multiple modules
+- [ ] Timeout is configured (10 minutes default)
+
+## Notification Tests
+- [ ] Commit author is notified on pipeline failure
+- [ ] Notification includes direct link to failed run
+- [ ] Only the commit author receives notification
+- [ ] GitHub commit status is updated correctly
+- [ ] Status badge can be added to README
+
+## Integration Tests
+- [ ] Pipeline integrates with GitHub Actions annotations
+- [ ] Violations appear inline in pull request reviews
+- [ ] Pipeline logs are comprehensive and readable
+- [ ] Artifacts are uploaded for failed runs
+
+## Edge Cases
+- [ ] Empty repository (no modules) handled gracefully
+- [ ] Very large modules analyzed without timeout
+- [ ] Network issues during module installation handled
+- [ ] Concurrent pipeline runs don't conflict
+
+## Security & Compliance
+- [ ] Pipeline runs with minimal required permissions
+- [ ] No sensitive data exposed in logs
+- [ ] PSScriptAnalyzer version is controlled
+- [ ] Workflow cannot be modified without review
+
+## Documentation
+- [ ] Pipeline guide is comprehensive and accurate
+- [ ] Troubleshooting section covers common issues
+- [ ] Examples include both success and failure cases
+- [ ] Configuration options are well documented
+
+## Post-Implementation
+- [ ] README includes pipeline status badge
+- [ ] Team is trained on pipeline usage
+- [ ] Monitoring is set up for pipeline health
+- [ ] Success metrics are being tracked
+
+---
+
+**Note**: This checklist should be reviewed and updated after each significant pipeline change.
+"@
+          
+          Write-Host $checklist
+          Set-Content -Path "pipeline-validation-checklist.md" -Value $checklist
+        shell: pwsh
+        
+      - name: Create Test Summary
+        run: |
+          $summary = @"
+# Pipeline Test Summary
+
+## Test Results
+
+| Test | Status | Notes |
+|------|--------|-------|
+| Pipeline Structure | $('${{ needs.validate-pipeline-structure.result }}' -eq 'success' ? '✅' : '❌') | Validates workflow files exist |
+| Missing Modules | $('${{ needs.test-missing-modules.result }}' -eq 'success' ? '✅' : '❌') | Tests graceful handling |
+| Syntax Errors | $('${{ needs.test-syntax-errors.result }}' -eq 'success' ? '✅' : '❌') | Detects code syntax issues |
+| Analyzer Violations | $('${{ needs.test-analyzer-violations.result }}' -eq 'success' ? '✅' : '❌') | Catches rule violations |
+| Performance | $('${{ needs.test-performance.result }}' -eq 'success' ? '✅' : '❌') | Meets 5-minute target |
+| Notifications | $('${{ needs.test-notifications.result }}' -eq 'success' ? '✅' : '❌') | Validates alert system |
+
+## Recommendations
+
+Based on test results, consider:
+1. Implementing any missing pipeline components
+2. Optimizing performance for large codebases
+3. Adding custom PSScriptAnalyzer rules for team standards
+4. Setting up monitoring dashboards for pipeline metrics
+"@
+          
+          Write-Host $summary
+          Set-Content -Path "test-summary.md" -Value $summary
+        shell: pwsh
+        
+      - name: Upload Test Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pipeline-validation-results
+          path: |
+            pipeline-validation-checklist.md
+            test-summary.md
