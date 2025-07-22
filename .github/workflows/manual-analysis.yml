@@ -96,7 +96,7 @@ jobs:
           }
           
           Write-Host "Found $($files.Count) file(s) to analyze"
-          echo "file_count=$($files.Count)" >> $env:GITHUB_OUTPUT
+          "file_count=$($files.Count)" | Add-Content -Path $env:GITHUB_OUTPUT
 
       - name: 🔬 Run Analysis
         shell: pwsh

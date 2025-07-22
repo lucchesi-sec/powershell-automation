@@ -68,7 +68,7 @@ jobs:
               Import-Module PSScriptAnalyzer
               $ruleCount = (Get-ScriptAnalyzerRule).Count
               Write-Host "📋 Available analysis rules: $ruleCount"
-              echo "analyzer_version=$($module.Version)" >> $env:GITHUB_OUTPUT
+              "analyzer_version=$($module.Version)" | Add-Content -Path $env:GITHUB_OUTPUT
             } else {
               throw "PSScriptAnalyzer installation verification failed"
             }
@@ -90,13 +90,13 @@ jobs:
           
           if ($psFiles.Count -eq 0) {
             Write-Host "::warning::No PowerShell files (.ps1/.psm1) found in repository"
-            echo "module_count=0" >> $env:GITHUB_OUTPUT
+            "module_count=0" | Add-Content -Path $env:GITHUB_OUTPUT
           } else {
             Write-Host "Found $($psFiles.Count) PowerShell file(s) to analyze:"
             $psFiles | ForEach-Object { 
               Write-Host "  📄 $($_.FullName.Replace($PWD, '.'))"
             }
-            echo "module_count=$($psFiles.Count)" >> $env:GITHUB_OUTPUT
+            "module_count=$($psFiles.Count)" | Add-Content -Path $env:GITHUB_OUTPUT
             
             # Save file paths for next step
             $filePaths = $psFiles.FullName -join "`n"
@@ -175,10 +175,10 @@ jobs:
           Write-Host "=" * 60
           
           # Set outputs
-          echo "total_issues=$totalIssues" >> $env:GITHUB_OUTPUT
-          echo "error_count=$errorCount" >> $env:GITHUB_OUTPUT
-          echo "warning_count=$warningCount" >> $env:GITHUB_OUTPUT
-          echo "has_errors=$hasErrors" >> $env:GITHUB_OUTPUT
+          "total_issues=$totalIssues" | Add-Content -Path $env:GITHUB_OUTPUT
+          "error_count=$errorCount" | Add-Content -Path $env:GITHUB_OUTPUT
+          "warning_count=$warningCount" | Add-Content -Path $env:GITHUB_OUTPUT
+          "has_errors=$hasErrors" | Add-Content -Path $env:GITHUB_OUTPUT
           
           Write-Host "::endgroup::"
           
