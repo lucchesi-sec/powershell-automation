@@ -151,7 +151,7 @@ jobs:
                   }
                   
                   # Also output to console for logs
-                  Write-Host "$($result.Severity): $relativePath:$($result.Line):$($result.Column)"
+                  Write-Host "$($result.Severity): ${relativePath}:$($result.Line):$($result.Column)"
                   Write-Host "  Rule: $($result.RuleName)"
                   Write-Host "  Message: $($result.Message)"
                 }
