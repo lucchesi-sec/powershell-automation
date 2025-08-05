@@ -77,9 +77,14 @@ param(
     [switch]$EmailReport
 )
 
-# Import required modules
-Import-Module ActiveDirectory -ErrorAction Stop
-Import-Module "$PSScriptRoot\..\..\modules\PSAdminCore\PSAdminCore.psm1" -Force
+# Import required modules  
+$modulePath = Join-Path -Path $PSScriptRoot -ChildPath ".." | Join-Path -ChildPath ".." | Join-Path -ChildPath "modules" | Join-Path -ChildPath "PSAdminCore" | Join-Path -ChildPath "PSAdminCore.psd1"
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
 
 # Check administrative privileges
 if (-not (Test-AdminPrivileges)) {

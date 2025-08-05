@@ -60,6 +60,15 @@ param(
     [switch]$ReportOnly
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Initialize variables
 $ErrorActionPreference = "Continue"
 $LogFile = "$env:TEMP\ServiceMonitor_$(Get-Date -Format 'yyyyMMdd').log"
@@ -125,7 +134,7 @@ function Load-ServiceConfiguration {
 
 function Test-ServiceDependencies {
     param([array]$Dependencies)
-    
+
     foreach ($dependency in $Dependencies) {
         $depService = Get-Service -Name $dependency -ErrorAction SilentlyContinue
         if (-not $depService) {
@@ -168,7 +177,7 @@ function Restart-ServiceWithRetry {
         [string]$DisplayName,
         [array]$Dependencies
     )
-    
+
     if (-not $RestartAttempts.ContainsKey($ServiceName)) {
         $RestartAttempts[$ServiceName] = 0
     }
@@ -236,7 +245,7 @@ function Send-ServiceAlert {
         [string]$Status,
         [string]$Message
     )
-    
+
     if (-not $EmailNotifications) {
         return
     }
@@ -286,7 +295,7 @@ This is an automated notification from the Service Monitor script.
 
 function Monitor-Services {
     param([hashtable]$ServiceConfig)
-    
+
     $allServices = @()
     foreach ($category in $ServiceConfig.Keys) {
         $allServices += $ServiceConfig[$category]
@@ -350,7 +359,7 @@ function Monitor-Services {
 
 function Generate-HealthReport {
     param([hashtable]$ServiceConfig)
-    
+
     $report = @{
         Timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
         Computer = $env:COMPUTERNAME
@@ -466,3 +475,4 @@ finally {
     $finalReport = Generate-HealthReport -ServiceConfig $serviceConfig
     Write-Output $finalReport
 }
+

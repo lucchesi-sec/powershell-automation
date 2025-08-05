@@ -46,6 +46,15 @@ param(
     [switch]$SkipPublisherCheck
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Set strict mode for better error detection
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'

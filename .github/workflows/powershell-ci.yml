@@ -22,7 +22,10 @@ jobs:
   # Job: Code Analysis with PSScriptAnalyzer
   analyze-code:
     name: PSScriptAnalyzer Code Analysis
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10 # Default timeout as specified in PRD
     
     steps:
@@ -44,13 +47,19 @@ jobs:
           Write-Host "PSModulePath: $env:PSModulePath"
           Write-Host ""
 
-      # Step 3: Install PSScriptAnalyzer
-      - name: 📦 Install PSScriptAnalyzer
-        id: install-analyzer
+      # Step 3: Install Required Modules
+      - name: 📦 Install Required Modules
         shell: pwsh
         run: |
-          Write-Host "::group::Installing PSScriptAnalyzer"
+          Write-Host "::group::Installing Required Modules"
           try {
+            # Install SecretManagement modules for testing
+            Write-Host "Installing SecretManagement modules..."
+            Install-Module -Name Microsoft.PowerShell.SecretManagement -Scope CurrentUser -Force -SkipPublisherCheck -ErrorAction Stop
+            Install-Module -Name Microsoft.PowerShell.SecretStore -Scope CurrentUser -Force -SkipPublisherCheck -ErrorAction Stop
+            
+            # Install PSScriptAnalyzer
+            Write-Host "Installing PSScriptAnalyzer..."
             # Use the existing installation script if available
             $installScript = "./scripts/pipeline/Install-PSScriptAnalyzer.ps1"
             if (Test-Path $installScript) {
@@ -188,7 +197,65 @@ jobs:
             exit 1
           }
 
-      # Step 6: Generate analysis report
+      # Step 6: Run Pester Tests
+      - name: 🧪 Run Pester Tests
+        id: run-tests
+        if: steps.discover-modules.outputs.module_count != '0'
+        shell: pwsh
+        run: |
+          Write-Host "::group::Running Pester Tests"
+          
+          # Install Pester if not available
+          $pesterModule = Get-Module -ListAvailable -Name Pester | Where-Object { $_.Version -ge '5.0.0' }
+          if (-not $pesterModule) {
+            Write-Host "Installing Pester 5.x..."
+            Install-Module -Name Pester -MinimumVersion 5.0.0 -Force -SkipPublisherCheck
+          }
+          
+          Import-Module Pester
+          
+          # Check if tests directory exists
+          if (Test-Path "./tests") {
+            Write-Host "Found tests directory. Running tests..."
+            
+            # Configure Pester
+            $pesterConfig = New-PesterConfiguration
+            $pesterConfig.Run.Path = "./tests"
+            $pesterConfig.Run.PassThru = $true
+            $pesterConfig.Output.Verbosity = 'Detailed'
+            $pesterConfig.TestResult.Enabled = $true
+            $pesterConfig.TestResult.OutputPath = "./test-results.xml"
+            $pesterConfig.TestResult.OutputFormat = 'NUnitXml'
+            
+            # Run tests
+            $testResult = Invoke-Pester -Configuration $pesterConfig
+            
+            # Output summary
+            Write-Host "`n📊 Test Summary:"
+            Write-Host "  Total Tests: $($testResult.TotalCount)"
+            Write-Host "  ✅ Passed: $($testResult.PassedCount)"
+            Write-Host "  ❌ Failed: $($testResult.FailedCount)"
+            Write-Host "  ⏭️  Skipped: $($testResult.SkippedCount)"
+            
+            # Set outputs
+            "test_total=$($testResult.TotalCount)" | Add-Content -Path $env:GITHUB_OUTPUT
+            "test_passed=$($testResult.PassedCount)" | Add-Content -Path $env:GITHUB_OUTPUT
+            "test_failed=$($testResult.FailedCount)" | Add-Content -Path $env:GITHUB_OUTPUT
+            "tests_run=true" | Add-Content -Path $env:GITHUB_OUTPUT
+            
+            # Fail if tests failed
+            if ($testResult.FailedCount -gt 0) {
+              Write-Host "::error::Pester tests failed: $($testResult.FailedCount) test(s) failed."
+              exit 1
+            }
+          } else {
+            Write-Host "::warning::No tests directory found. Skipping Pester tests."
+            "tests_run=false" | Add-Content -Path $env:GITHUB_OUTPUT
+          }
+          
+          Write-Host "::endgroup::"
+
+      # Step 7: Generate analysis report
       - name: 📊 Generate Analysis Report
         if: always() && steps.discover-modules.outputs.module_count != '0'
         shell: pwsh
@@ -205,11 +272,17 @@ jobs:
           
           ## Summary
           
+          ### Code Analysis
           - **PSScriptAnalyzer Version:** ${{ steps.install-analyzer.outputs.analyzer_version }}
           - **PowerShell Files Analyzed:** ${{ steps.discover-modules.outputs.module_count }}
           - **Total Issues Found:** ${{ steps.run-analysis.outputs.total_issues || '0' }}
           - **Errors:** ${{ steps.run-analysis.outputs.error_count || '0' }}
           - **Warnings:** ${{ steps.run-analysis.outputs.warning_count || '0' }}
+          
+          ### Test Results
+          ${{ steps.run-tests.outputs.tests_run == 'true' && format('- **Total Tests:** {0}
+          - **✅ Passed:** {1}
+          - **❌ Failed:** {2}', steps.run-tests.outputs.test_total, steps.run-tests.outputs.test_passed, steps.run-tests.outputs.test_failed) || '- No tests found or tests skipped' }}
           
           ## Status
           

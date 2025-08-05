@@ -80,6 +80,15 @@ param(
     [switch]$FailOnWarning
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Set strict mode for better error detection
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -125,8 +134,7 @@ function Write-GitHubOutput {
             $annotation += ",line=$Line"
             if ($Column -gt 0) {
                 $annotation += ",col=$Column"
-            }
-        }
+}
     }
     
     $annotation += "::$Message"
@@ -141,8 +149,7 @@ function Test-PSScriptAnalyzer {
             Import-Module PSScriptAnalyzer -ErrorAction Stop
             Write-Host "✓ PSScriptAnalyzer $($module.Version) loaded successfully"
             return $true
-        }
-    }
+}
     catch {
         Write-GitHubOutput -Level Error -Message "PSScriptAnalyzer module not found or could not be loaded: $_"
     }
@@ -156,7 +163,7 @@ function Find-ModuleFiles {
         [bool]$RecurseSearch,
         [string[]]$ExcludePaths
     )
-    
+}
     $moduleFiles = @()
     
     try {
@@ -182,14 +189,10 @@ function Find-ModuleFiles {
                     $excluded = $true
                     Write-Host "  Excluding: $($file.FullName)"
                     break
-                }
-            }
-            
+}
             if (-not $excluded) {
                 $moduleFiles += $file
-            }
-        }
-        
+}
         Write-Host "Found $($moduleFiles.Count) module file(s) to analyze"
     }
     catch {
@@ -206,7 +209,8 @@ function Invoke-FileAnalysis {
         [string]$MinSeverity,
         [string[]]$ExcludedRules
     )
-    
+
+}
     Write-Host "`nAnalyzing: $($File.FullName)"
     
     $analysisParams = @{
@@ -247,16 +251,15 @@ function Invoke-FileAnalysis {
     catch {
         Write-GitHubOutput -Level Error -Message "Failed to analyze $($File.FullName): $_" -File $File.FullName
         return @()
-    }
 }
-
 # Function to format and output results
 function Format-AnalysisResults {
     param(
         [array]$Results,
         [string]$Format
     )
-    
+
+}
     switch ($Format) {
         'Console' {
             foreach ($result in $Results) {
@@ -279,13 +282,10 @@ function Format-AnalysisResults {
                     'Information' { 
                         Write-Host $message -ForegroundColor Green
                         $script:informationCount++
-                    }
-                }
-                
+}
                 if ($result.SuggestedCorrections) {
                     Write-Host "Suggestion: $($result.SuggestedCorrections[0].Description)" -ForegroundColor Blue
-                }
-            }
+}
         }
         
         'GitHub' {
@@ -304,8 +304,7 @@ function Format-AnalysisResults {
                     'Error' { $script:errorCount++ }
                     'Warning' { $script:warningCount++ }
                     'Information' { $script:informationCount++ }
-                }
-            }
+}
         }
         
         'Json' {
@@ -314,8 +313,7 @@ function Format-AnalysisResults {
         
         'Xml' {
             $Results | ConvertTo-Xml -Depth 10 -As String
-        }
-    }
+}
 }
 
 # Main execution
@@ -355,9 +353,7 @@ try {
         $fileResults = Invoke-FileAnalysis -File $file -MinSeverity $Severity -ExcludedRules $ExcludeRule
         if ($fileResults) {
             $allResults += $fileResults
-        }
-    }
-    
+}
     # Output results
     if ($allResults.Count -gt 0) {
         Write-Host "`n=== Analysis Results ===" -ForegroundColor Cyan
@@ -382,7 +378,6 @@ try {
     }
     else {
         Write-Host "`n✓ Analysis completed successfully" -ForegroundColor Green
-    }
 }
 catch {
     $script:exitCode = 5
@@ -391,3 +386,5 @@ catch {
 }
 
 exit $script:exitCode
+
+

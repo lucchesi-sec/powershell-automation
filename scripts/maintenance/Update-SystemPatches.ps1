@@ -71,6 +71,15 @@ param(
     [switch]$ForceInstall
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Initialize variables
 $ErrorActionPreference = "Continue"
 $LogFile = "$env:TEMP\SystemUpdates_$(Get-Date -Format 'yyyyMMdd').log"
@@ -82,7 +91,10 @@ function Write-UpdateLog {
         [string]$Message,
         [string]$Level = "INFO"
     )
-    
+
+
+}
+}
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     $logMessage = "[$timestamp] [$Level] $Message"
     
@@ -237,7 +249,8 @@ function Get-AvailableUpdates {
 
 function Download-Updates {
     param([array]$Updates)
-    
+
+}
     if ($Updates.Count -eq 0) {
         Write-UpdateLog "No updates to download"
         return $true
@@ -275,7 +288,8 @@ function Download-Updates {
 
 function Install-Updates {
     param([array]$Updates)
-    
+
+}
     if ($Updates.Count -eq 0) {
         Write-UpdateLog "No updates to install"
         return $true
@@ -334,7 +348,8 @@ function Install-Updates {
 
 function Test-SystemHealth {
     param([string]$Phase)
-    
+
+}
     Write-UpdateLog "Performing system health check ($Phase)..."
     
     $healthResults = @{
@@ -430,7 +445,8 @@ function Send-UpdateNotification {
         [string]$Subject,
         [string]$Message
     )
-    
+
+}
     $emailConfigPath = ".\config\email.json"
     if (-not (Test-Path $emailConfigPath)) {
         return
@@ -476,7 +492,8 @@ function Generate-UpdateReport {
         [hashtable]$PreHealthCheck,
         [hashtable]$PostHealthCheck
     )
-    
+
+}
     $report = @{
         Timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
         Computer = $env:COMPUTERNAME
@@ -602,3 +619,5 @@ finally {
         PostHealthCheck = if ($postHealthCheck) { $postHealthCheck } else { $null }
     }
 }
+
+

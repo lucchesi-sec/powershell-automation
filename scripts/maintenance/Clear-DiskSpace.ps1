@@ -47,6 +47,15 @@ param(
     [switch]$WhatIf
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Initialize variables
 $ErrorActionPreference = "Continue"
 $VerbosePreference = "Continue"
@@ -332,3 +341,5 @@ return [PSCustomObject]@{
     TotalSpaceFreed = "$totalFreed GB"
     CleanupResults = $CleanupResults
 }
+
+

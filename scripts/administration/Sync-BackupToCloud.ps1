@@ -94,7 +94,16 @@ param(
 )
 
 # Import required modules
-Import-Module "$PSScriptRoot\..\..\modules\PSAdminCore\PSAdminCore.psm1" -Force
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
 
 Write-AdminLog -Message "Starting cloud backup synchronization (Provider: $CloudProvider, Mode: $SyncMode)" -Level "Info"
 

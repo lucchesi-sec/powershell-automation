@@ -4,8 +4,6 @@
 *.dll
 *.exe
 *.psc1
-*.psd1
-*.psm1
 *.ps1.lock
 *.log
 *.zip
@@ -16,9 +14,17 @@
 Thumbs.db
 Desktop.ini
 
-# Modules folder (if you download modules locally)
-Modules/
-Pester/
+# External modules folder (if you download modules locally)
+# But don't ignore our own modules
+/Modules/
+/Pester/
+
+# Don't ignore our core module
+!modules/
+!modules/PSAdminCore/
+!modules/PSAdminCore/**/*.ps1
+!modules/PSAdminCore/**/*.psd1
+!modules/PSAdminCore/**/*.psm1
 
 # VS Code
 .vscode/

@@ -8,12 +8,20 @@
 #>
 
 # Module script scope variables
-$script:ModuleRoot = $PSScriptRoot
+if ($PSScriptRoot) {
+    $script:ModuleRoot = $PSScriptRoot
+} elseif ($MyInvocation.MyCommand.Path) {
+    $script:ModuleRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
+} else {
+    # Fallback - try to find the module in the current directory structure
+    $script:ModuleRoot = Join-Path (Get-Location).Path 'modules/PSAdminCore'
+}
 $script:ConfigCache = @{}
-$script:LogPath = Join-Path $env:TEMP "PSAdminCore_$(Get-Date -Format 'yyyyMMdd').log"
+$tempPath = if ($env:TEMP) { $env:TEMP } elseif ($env:TMPDIR) { $env:TMPDIR } else { '/tmp' }
+$script:LogPath = Join-Path $tempPath "PSAdminCore_$(Get-Date -Format 'yyyyMMdd').log"
 
 # Import all public functions
-$PublicPath = Join-Path $PSScriptRoot 'Public'
+$PublicPath = Join-Path $script:ModuleRoot 'Public'
 if (Test-Path $PublicPath) {
     Get-ChildItem -Path $PublicPath -Filter '*.ps1' -File | ForEach-Object {
         try {
@@ -27,7 +35,7 @@ if (Test-Path $PublicPath) {
 }
 
 # Import all private functions
-$PrivatePath = Join-Path $PSScriptRoot 'Private'
+$PrivatePath = Join-Path $script:ModuleRoot 'Private'
 if (Test-Path $PrivatePath) {
     Get-ChildItem -Path $PrivatePath -Filter '*.ps1' -File | ForEach-Object {
         try {

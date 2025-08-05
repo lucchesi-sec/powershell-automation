@@ -60,6 +60,15 @@ param(
     [switch]$GenerateArtifact
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 begin {
     # Initialize collections
     $allResults = @()
@@ -71,6 +80,7 @@ begin {
     # Helper function to escape HTML
     function ConvertTo-HtmlEncoded {
         param([string]$Text)
+}
         [System.Web.HttpUtility]::HtmlEncode($Text)
     }
     
@@ -84,7 +94,8 @@ begin {
             [int]$Column,
             [string]$Title
         )
-        
+
+}
         $annotation = "::$($Level.ToLower())"
         
         if ($File) {
@@ -100,13 +111,10 @@ begin {
                 $annotation += ",line=$Line"
                 if ($Column -gt 0) {
                     $annotation += ",col=$Column"
-                }
-            }
+}
             if ($Title) {
                 $annotation += ",title=$Title"
-            }
-        }
-        
+}
         $annotation += "::$Message"
         return $annotation
     }
@@ -114,7 +122,8 @@ begin {
     # Helper function to generate summary statistics
     function Get-AnalysisSummary {
         param([object[]]$Results)
-        
+
+}
         $summary = @{
             TotalIssues = $Results.Count
             Errors = ($Results | Where-Object { $_.Severity -eq 'Error' }).Count
@@ -128,9 +137,7 @@ begin {
         }
         
         return $summary
-    }
 }
-
 process {
     # Collect all results
     $allResults += $AnalysisResults
@@ -153,9 +160,7 @@ end {
         # Track unique files
         if ($result.ScriptPath -and -not $script:fileCount.ContainsKey($result.ScriptPath)) {
             $script:fileCount[$result.ScriptPath] = $true
-        }
-    }
-    
+}
     # Format based on selected output type
     switch ($Format) {
         'GitHub' {
@@ -209,8 +214,7 @@ end {
                 }
                 else {
                     Write-Host "`n$summaryMd"
-                }
-            }
+}
         }
         
         'HTML' {
@@ -265,8 +269,7 @@ end {
                         $html += "</tr>"
                     }
                     $html += "</table>"
-                }
-            }
+}
             else {
                 $html += "<table>"
                 $html += "<tr><th>Severity</th><th>File</th><th>Location</th><th>Rule</th><th>Message</th></tr>"
@@ -292,9 +295,7 @@ end {
             }
             else {
                 Write-Output $html
-            }
-        }
-        
+}
         'Markdown' {
             $markdown = @"
 # PSScriptAnalyzer Report
@@ -321,8 +322,7 @@ Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
                     
                     foreach ($result in $group.Group | Sort-Object Line) {
                         $markdown += "| $($result.Line):$($result.Column) | $($result.Severity) | $($result.RuleName) | $($result.Message) |`n"
-                    }
-                }
+}
             }
             else {
                 $markdown += "| Severity | File | Location | Rule | Message |`n"
@@ -330,18 +330,14 @@ Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
                 
                 foreach ($result in $allResults | Sort-Object Severity, ScriptPath, Line) {
                     $markdown += "| $($result.Severity) | $($result.ScriptPath) | $($result.Line):$($result.Column) | $($result.RuleName) | $($result.Message) |`n"
-                }
-            }
-            
+}
             if ($OutputPath) {
                 $markdown | Out-File -FilePath $OutputPath -Encoding utf8
                 Write-Host "Markdown report saved to: $OutputPath" -ForegroundColor Green
             }
             else {
                 Write-Output $markdown
-            }
-        }
-        
+}
         'JSON' {
             $jsonReport = @{
                 metadata = @{
@@ -368,8 +364,7 @@ Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
             }
             else {
                 Write-Output $json
-            }
-        }
+}
     }
     
     # Generate artifact file for GitHub Actions
@@ -382,18 +377,14 @@ Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
                 generatedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
                 psVersion = $PSVersionTable.PSVersion.ToString()
                 platform = $PSVersionTable.Platform
-            }
-        }
-        
+}
         $artifactData | ConvertTo-Json -Depth 10 | Out-File -FilePath $artifactPath -Encoding utf8
         Write-Host "Artifact file created: $artifactPath" -ForegroundColor Green
         
         # Output artifact path for GitHub Actions
         if ($env:GITHUB_OUTPUT) {
             "artifact-path=$artifactPath" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-        }
-    }
-    
+}
     # Return exit code based on results
     if ($script:errorCount -gt 0) {
         exit 1
@@ -403,5 +394,4 @@ Generated: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
     }
     else {
         exit 0
-    }
 }

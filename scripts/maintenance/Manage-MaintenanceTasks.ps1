@@ -64,6 +64,15 @@ param(
     [switch]$Force
 )
 
+# Import required modules
+
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    # Fall back to installed module
+    Import-Module PSAdminCore -Force -ErrorAction Stop
+}
+
 # Initialize variables
 $ErrorActionPreference = "Continue"
 $LogFile = "$env:TEMP\MaintenanceTasks_$(Get-Date -Format 'yyyyMMdd').log"
@@ -126,7 +135,10 @@ function Write-TaskLog {
         [string]$Level = "INFO",
         [string]$Task = ""
     )
-    
+
+
+}
+}
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     $taskInfo = if ($Task) { " [$Task]" } else { "" }
     $logMessage = "[$timestamp] [$Level]$taskInfo $Message"
@@ -181,7 +193,8 @@ function New-MaintenanceTask {
         [string]$Description,
         [string]$Priority = "Normal"
     )
-    
+
+}
     Write-TaskLog "Creating maintenance task: $Name" -Task $Name
     
     try {
@@ -281,7 +294,8 @@ function New-MaintenanceTask {
 
 function Remove-MaintenanceTask {
     param([string]$Name)
-    
+
+}
     Write-TaskLog "Removing maintenance task: $Name" -Task $Name
     
     try {
@@ -391,7 +405,8 @@ function Monitor-TaskExecution {
 
 function Send-TaskAlert {
     param([array]$Issues)
-    
+
+}
     if (-not $EmailNotifications) {
         return
     }
@@ -603,3 +618,5 @@ catch {
 finally {
     Write-TaskLog "=== Maintenance Task Manager Completed ==="
 }
+
+
