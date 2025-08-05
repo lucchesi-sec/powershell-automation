@@ -3,7 +3,7 @@ uid: api.scripts.administration
 ---
 # Administration Scripts
 
-This section provides documentation for the administration scripts in the `powershell-automation` repository. These scripts are used to perform common administrative tasks in a Windows enterprise environment.
+This section provides documentation for the administration scripts in the `powershell-automation` repository. These scripts are used to perform common administrative tasks in a Windows production environment.
 
 ## Scripts
 

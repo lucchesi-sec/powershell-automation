@@ -9,7 +9,7 @@ name: Test-BackupIntegrity
 Validates the integrity and completeness of backup files and archives.
 
 ## Description
-This script performs comprehensive integrity testing of backup files including checksum verification, archive validation, and restoration testing. It ensures backup files are reliable and can be successfully restored when needed, which is critical for enterprise data protection strategies.
+This script performs comprehensive integrity testing of backup files including checksum verification, archive validation, and restoration testing. It ensures backup files are reliable and can be successfully restored when needed, which is critical for production data protection strategies.
 
 ## Syntax
 ```powershell
@@ -41,7 +41,7 @@ PS C:\> .\Test-BackupIntegrity.ps1 -BackupPath "C:\Backups" -TestType "Full" -Ge
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, backup file access permissions
 - **Performance:** Deep testing may take significant time for large backup sets
 

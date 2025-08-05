@@ -1,8 +1,8 @@
-# Enterprise Deployment Guide
+# Deployment Guide
 
 ## Overview
 
-This guide provides comprehensive instructions for deploying the PowerShell Enterprise Automation Platform in production environments. It covers installation, configuration, security hardening, and operational procedures for enterprise-scale deployments.
+This guide provides comprehensive instructions for deploying the PowerShell Automation Platform in production environments. It covers installation, configuration, security hardening, and operational procedures for production-scale deployments.
 
 ## Prerequisites
 
@@ -99,7 +99,7 @@ Create `C:\ProgramData\PSAutomation\config\cloud-config.json`:
     "Azure": {
         "StorageAccountName": "companybackups",
         "StorageAccountKey": "encrypted-key-here",
-        "DefaultContainer": "enterprise-backups"
+        "DefaultContainer": "backups"
     },
     "AWS": {
         "AccessKeyId": "encrypted-access-key",
@@ -181,7 +181,7 @@ $trigger = New-ScheduledTaskTrigger -Daily -At "2:00 AM"
 
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 
-Register-ScheduledTask -TaskName "Enterprise Daily Backup" -Action $action -Trigger $trigger -Settings $settings -User "COMPANY\psautosvc" -Password "ComplexPassword123!"
+Register-ScheduledTask -TaskName "Daily Backup" -Action $action -Trigger $trigger -Settings $settings -User "COMPANY\psautosvc" -Password "ComplexPassword123!"
 ```
 
 ### Health Monitoring Tasks
@@ -269,7 +269,7 @@ Create `C:\ProgramData\PSAutomation\config\backup-config.json`:
             "name": "CriticalSystems",
             "type": "FileSystem",
             "sources": ["C:\\CriticalData", "D:\\Databases"],
-            "destination": "\\\\backup-server\\enterprise",
+            "destination": "\\\\backup-server\\backups",
             "compression": true,
             "encryption": true,
             "cloudSync": true,
@@ -413,7 +413,7 @@ Import-Module "C:\Program Files\WindowsPowerShell\Modules\PSAdminCore\PSAdminCor
 #### Scheduled Task Failures
 ```powershell
 # Check task history
-Get-ScheduledTask -TaskName "Enterprise Daily Backup" | Get-ScheduledTaskInfo
+Get-ScheduledTask -TaskName "Daily Backup" | Get-ScheduledTaskInfo
 
 # Review event logs
 Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-TaskScheduler/Operational'; ID=201}
@@ -453,4 +453,4 @@ Test-NetConnection -ComputerName "smtp.company.com" -Port 587
 - Regular compliance assessments
 - Incident response procedures
 
-This deployment guide provides the foundation for successfully implementing the PowerShell Enterprise Automation Platform in production environments with enterprise-grade security and reliability.
+This deployment guide provides the foundation for successfully implementing the PowerShell Automation Platform in production environments with production-grade security and reliability.

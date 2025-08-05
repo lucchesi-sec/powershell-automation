@@ -9,7 +9,7 @@ name: Set-ADUserLifecycle
 Manages Active Directory user account lifecycle operations including onboarding and offboarding.
 
 ## Description
-This script automates user lifecycle management in Active Directory, including new user onboarding, account modifications, and secure offboarding procedures. It handles group memberships, access rights, data archival, and compliance requirements for enterprise user management.
+This script automates user lifecycle management in Active Directory, including new user onboarding, account modifications, and secure offboarding procedures. It handles group memberships, access rights, data archival, and compliance requirements for production user management.
 
 ## Syntax
 ```powershell
@@ -44,7 +44,7 @@ PS C:\> .\Set-ADUserLifecycle.ps1 -Username "jdoe" -Action "Offboard" -ArchiveDa
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** ActiveDirectory module, PSAdminCore module, HR system integration
 - **Compliance:** Includes audit logging for regulatory requirements
 

@@ -9,7 +9,7 @@ name: Test-AdminPrivileges
 Tests if the current PowerShell session has administrative privileges.
 
 ## Description
-In an enterprise environment, it is critical to ensure that scripts performing sensitive operations (e.g., modifying system configurations, accessing restricted resources) do so only when explicitly run with elevated permissions. This function provides a reliable way to check for these privileges.
+In a production environment, it is critical to ensure that scripts performing sensitive operations (e.g., modifying system configurations, accessing restricted resources) do so only when explicitly run with elevated permissions. This function provides a reliable way to check for these privileges.
 
 It determines if the current user's security principal is a member of the built-in 'Administrator' role using the .NET [System.Security.Principal.WindowsPrincipal] class. This method is more robust than checking the process elevation token, as it verifies role membership directly.
 
@@ -47,7 +47,7 @@ PS C:\> if (-not (Test-AdminPrivileges)) {
 This command is a security best practice used at the beginning of a script to ensure it stops execution if not run with administrative rights, preventing errors and enforcing security policies.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.2.0
 - **Prerequisites:** Requires a Windows environment to access the WindowsPrincipal class. No special permissions are needed to run the check itself.
 

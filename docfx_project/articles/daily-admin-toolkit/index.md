@@ -11,13 +11,13 @@ System administrators spend significant time on repetitive tasks. The Daily Admi
 - **Pre-built, tested functions** for common admin tasks
 - **Modular design** allowing independent module management
 - **Pipeline-friendly** functions that integrate seamlessly
-- **Enterprise-ready** with proper error handling and security
+- **Production-ready** with proper error handling and security
 - **Consistent interface** following PowerShell best practices
 
 ## Core Modules
 
 ### ActiveDirectory Module
-Manage user accounts, passwords, and group memberships with enterprise-grade security.
+Manage user accounts, passwords, and group memberships with production-grade security.
 
 **Key Functions:**
 - `Unlock-ADAccount` - Unlock user accounts quickly
@@ -111,9 +111,9 @@ Get-ServiceStatus -ComputerName @('WEB01', 'WEB02') -ServiceName @('IIS', 'W3SVC
     Where-Object { $_.Status -ne 'Running' }
 ```
 
-## Integration with Enterprise Features
+## Integration with Production Features
 
-The Daily Admin Toolkit is designed as a gateway to enterprise PowerShell adoption:
+The Daily Admin Toolkit is designed as a gateway to production PowerShell adoption:
 
 - **Logging Integration** - Works with existing logging frameworks
 - **Monitoring Hooks** - Integrates with SCOM, Nagios, and other monitoring systems
@@ -128,14 +128,14 @@ Every function in the Daily Admin Toolkit includes:
 - **Parameter Validation** - Input validation and type checking
 - **Error Handling** - Graceful error handling with detailed messages
 - **Security Review** - Secure credential handling and execution policies
-- **Performance Testing** - Benchmarked for enterprise environments
+- **Performance Testing** - Benchmarked for production environments
 
 ## Support and Community
 
 - **Issue Tracking** - Report bugs and request features
 - **Community Recipes** - Share your custom admin recipes
 - **Training Resources** - Video tutorials and documentation
-- **Enterprise Support** - Professional support options available
+- **Professional Support** - Professional support options available
 
 ## Next Steps
 

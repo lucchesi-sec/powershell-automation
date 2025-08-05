@@ -9,7 +9,7 @@ name: Sync-BackupToCloud
 Synchronizes local backup files to cloud storage with encryption and verification.
 
 ## Description
-This script provides secure synchronization of backup files to cloud storage providers. It includes encryption, compression, bandwidth throttling, and integrity verification. Supports multiple cloud providers and includes comprehensive logging for enterprise backup-to-cloud operations.
+This script provides secure synchronization of backup files to cloud storage providers. It includes encryption, compression, bandwidth throttling, and integrity verification. Supports multiple cloud providers and includes comprehensive logging for production backup-to-cloud operations.
 
 ## Syntax
 ```powershell
@@ -47,7 +47,7 @@ PS C:\> .\Sync-BackupToCloud.ps1 -LocalPath "C:\Backups" -CloudProvider "Azure" 
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, cloud provider credentials, network connectivity
 - **Security:** Includes client-side encryption and secure credential management
 

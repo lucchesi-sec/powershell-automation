@@ -4,7 +4,7 @@ uid: articles.quick-reference
 
 # Quick Reference
 
-This quick reference guide provides essential commands, functions, and workflows for the PowerShell Enterprise Automation Platform. Keep this handy for day-to-day operations.
+This quick reference guide provides essential commands, functions, and workflows for the PowerShell Automation Platform. Keep this handy for day-to-day operations.
 
 ## Essential Commands
 

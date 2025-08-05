@@ -44,7 +44,7 @@ PS C:\> .\Sync-ADGroupMembership.ps1 -DataSource "C:\HR_Export.csv" -MappingFile
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** ActiveDirectory module, PSAdminCore module, data source access permissions
 - **Security:** Validates all changes against business rules before applying
 

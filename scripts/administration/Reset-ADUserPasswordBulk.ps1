@@ -126,7 +126,7 @@ function New-SecurePassword {
 function Test-PrivilegedUser {
     param([string]$Username)
     
-    $privilegedGroups = @("Domain Admins", "Enterprise Admins", "Schema Admins", "Administrators", "Account Operators", "Server Operators", "Backup Operators")
+    $privilegedGroups = @("Domain Admins", "Schema Admins", "Administrators", "Account Operators", "Server Operators", "Backup Operators")
     
     foreach ($group in $privilegedGroups) {
         try {

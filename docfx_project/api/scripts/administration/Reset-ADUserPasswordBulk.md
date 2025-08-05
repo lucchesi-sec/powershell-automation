@@ -9,7 +9,7 @@ name: Reset-ADUserPasswordBulk
 Performs bulk password resets for Active Directory users with security controls.
 
 ## Description
-This script provides secure bulk password reset capabilities for Active Directory users. It includes security validation, audit logging, and notification features. Supports exclusion lists for privileged accounts and includes comprehensive error handling for enterprise password management operations.
+This script provides secure bulk password reset capabilities for Active Directory users. It includes security validation, audit logging, and notification features. Supports exclusion lists for privileged accounts and includes comprehensive error handling for production password management operations.
 
 ## Syntax
 ```powershell
@@ -44,7 +44,7 @@ PS C:\> .\Reset-ADUserPasswordBulk.ps1 -UserList "C:\Users.txt" -RandomPasswords
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** ActiveDirectory module, PSAdminCore module, privileged AD permissions
 - **Security:** Always excludes domain administrator accounts from bulk operations
 

@@ -2,7 +2,7 @@
 .SYNOPSIS
     Automated data restoration from backup files with comprehensive validation and rollback capabilities.
 .DESCRIPTION
-    This script provides enterprise-grade data restoration capabilities including selective file recovery,
+    This script provides data restoration capabilities including selective file recovery,
     point-in-time restoration, integrity verification, and automatic rollback on failure. Supports
     multiple backup formats, encryption, and detailed recovery logging.
 .PARAMETER BackupPath

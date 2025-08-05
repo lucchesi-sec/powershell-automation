@@ -3,7 +3,7 @@
 Generated: 2025-01-04
 
 ## Summary
-This report validates that all documentation in the DocFX project correctly references only actual scripts and modules present in the PowerShell Enterprise Automation Platform repository.
+This report validates that all documentation in the DocFX project correctly references only actual scripts and modules present in the PowerShell Automation Platform repository.
 
 ## Validation Results
 

@@ -9,7 +9,7 @@ name: New-AdminReport
 Creates standardized administrative reports in various formats (HTML, CSV, JSON).
 
 ## Description
-This function is a versatile reporting engine for creating standardized administrative reports from any PowerShell object data. In an enterprise context, this is essential for compliance, auditing, and operational visibility.
+This function is a versatile reporting engine for creating standardized administrative reports from any PowerShell object data. In a production context, this is essential for compliance, auditing, and operational visibility.
 
 It supports multiple output formats to serve different needs:
 - HTML: For human-readable reports suitable for management.
@@ -77,7 +77,7 @@ PS C:\> New-AdminReport -Title "Top 10 Memory-Consuming Processes" -Data $proces
 This command gathers data on the top 10 memory-consuming processes and generates a formatted HTML report. The report is saved to the default reports directory for easy access and review.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.2.0
 - **Prerequisites:** The data provided to this function may come from other modules, such as the ActiveDirectory module, which would need to be installed and available on the system.
 

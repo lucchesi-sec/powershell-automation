@@ -14,12 +14,12 @@
   [![GitHub forks](https://img.shields.io/github/forks/lucchesi-sec/powershell-automation.svg)](https://github.com/lucchesi-sec/powershell-automation/network)
   [![GitHub stars](https://img.shields.io/github/stars/lucchesi-sec/powershell-automation.svg)](https://github.com/lucchesi-sec/powershell-automation/stargazers)
   
-  **A comprehensive collection of PowerShell modules and scripts for enterprise automation**
+  **A comprehensive collection of PowerShell modules and scripts for automation**
 </div>
 
 ## Overview
 
-This repository provides a suite of tools for automating common administrative and maintenance tasks in a Windows enterprise environment. The project is built around a core module, `PSAdminCore`, which provides essential functions for logging, notifications, reporting, and credential management.
+This repository provides a suite of tools for automating common administrative and maintenance tasks in a Windows environment. The project is built around a core module, `PSAdminCore`, which provides essential functions for logging, notifications, reporting, and credential management.
 
 ## Features
 

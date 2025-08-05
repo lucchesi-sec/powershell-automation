@@ -9,7 +9,7 @@ name: Test-AdminParameter
 Validates parameters using common validation patterns for administrative tasks.
 
 ## Description
-This function provides standardized parameter validation for administrative scripts, ensuring data integrity and security. It supports common validation types including empty value checks, email format validation, and other patterns commonly needed in enterprise automation scenarios.
+This function provides standardized parameter validation for administrative scripts, ensuring data integrity and security. It supports common validation types including empty value checks, email format validation, and other patterns commonly needed in automation scenarios.
 
 Using centralized validation ensures consistent data quality across all administrative scripts and reduces the risk of errors from invalid input data.
 
@@ -65,7 +65,7 @@ PS C:\> if (-not (Test-AdminParameter -Value $userInput -Type NotEmpty)) {
 This command demonstrates input validation at the beginning of a script to ensure required parameters are provided before proceeding with administrative operations.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.2.0
 - **Prerequisites:** No special prerequisites required for basic validation patterns.
 

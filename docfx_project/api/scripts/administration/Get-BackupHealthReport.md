@@ -9,7 +9,7 @@ name: Get-BackupHealthReport
 Generates comprehensive health reports for backup operations and infrastructure.
 
 ## Description
-This script analyzes backup systems, schedules, and recent operations to provide detailed health reports. It monitors backup success rates, identifies failed operations, checks storage capacity, and validates backup integrity to ensure reliable data protection in enterprise environments.
+This script analyzes backup systems, schedules, and recent operations to provide detailed health reports. It monitors backup success rates, identifies failed operations, checks storage capacity, and validates backup integrity to ensure reliable data protection in production environments.
 
 ## Syntax
 ```powershell
@@ -41,7 +41,7 @@ PS C:\> .\Get-BackupHealthReport.ps1 -Days 7 -Format "HTML" -EmailReport
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, backup system access permissions
 
 ## Related Links

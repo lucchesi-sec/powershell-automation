@@ -8,7 +8,7 @@
                 "D:\\Databases",
                 "C:\\ApplicationData"
             ],
-            "destination": "\\\\backup-server\\enterprise\\critical",
+            "destination": "\\\\backup-server\\backups\\critical",
             "compression": true,
             "encryption": true,
             "cloudSync": true,
@@ -22,7 +22,7 @@
             "sources": [
                 "C:\\Users"
             ],
-            "destination": "\\\\backup-server\\enterprise\\profiles",
+            "destination": "\\\\backup-server\\backups\\profiles",
             "compression": true,
             "encryption": false,
             "cloudSync": false,
@@ -36,7 +36,7 @@
             "sources": [
                 "SystemState"
             ],
-            "destination": "\\\\backup-server\\enterprise\\systemstate",
+            "destination": "\\\\backup-server\\backups\\systemstate",
             "compression": true,
             "encryption": true,
             "cloudSync": true,
@@ -52,7 +52,7 @@
                 "C:\\Windows\\Logs",
                 "C:\\ProgramData\\Logs"
             ],
-            "destination": "\\\\backup-server\\enterprise\\logs",
+            "destination": "\\\\backup-server\\backups\\logs",
             "compression": true,
             "encryption": false,
             "cloudSync": true,
@@ -64,7 +64,7 @@
     "cloudProviders": {
         "primary": "Azure",
         "secondary": "AWS",
-        "azureContainer": "enterprise-backups",
+        "azureContainer": "backups",
         "awsBucket": "company-backups"
     },
     "encryption": {

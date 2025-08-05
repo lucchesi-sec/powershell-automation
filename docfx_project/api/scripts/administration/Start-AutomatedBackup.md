@@ -9,7 +9,7 @@ name: Start-AutomatedBackup
 Initiates automated backup operations with comprehensive configuration and monitoring.
 
 ## Description
-This script provides a complete automated backup solution with support for multiple backup types, encryption, compression, and cloud synchronization. It includes comprehensive logging, error handling, and notification capabilities for enterprise backup operations.
+This script provides a complete automated backup solution with support for multiple backup types, encryption, compression, and cloud synchronization. It includes comprehensive logging, error handling, and notification capabilities for production backup operations.
 
 ## Syntax
 ```powershell
@@ -50,7 +50,7 @@ PS C:\> .\Start-AutomatedBackup.ps1 -BackupType "Full" -Source "C:\Data" -Encryp
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, appropriate backup permissions
 
 ## Related Links

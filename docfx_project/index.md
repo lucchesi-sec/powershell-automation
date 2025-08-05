@@ -1,11 +1,11 @@
 ---
 uid: home
-title: PowerShell Enterprise Automation Platform
+title: PowerShell Automation Platform
 ---
 
-# PowerShell Enterprise Automation Platform
+# PowerShell Automation Platform
 
-Welcome to the **PowerShell Enterprise Automation Platform** documentation site. This comprehensive platform streamlines IT operations through intelligent automation, focusing on Windows system administration, cybersecurity operations, and infrastructure management.
+Welcome to the **PowerShell Automation Platform** documentation site. This comprehensive platform streamlines IT operations through intelligent automation, focusing on Windows system administration, cybersecurity operations, and infrastructure management.
 
 ## 🚀 Quick Navigation
 
@@ -87,4 +87,4 @@ This documentation site features:
 
 ---
 
-*PowerShell Enterprise Automation Platform - Streamline your IT operations with intelligent automation*
+*PowerShell Automation Platform - Streamline your IT operations with intelligent automation*

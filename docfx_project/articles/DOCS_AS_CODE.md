@@ -1,4 +1,4 @@
-# Docs-as-Code Framework for PowerShell Enterprise Automation Platform
+# Docs-as-Code Framework for PowerShell Automation Platform
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -15,7 +15,7 @@
 - [Tools and Resources](#tools-and-resources)
 
 ## Introduction
-The PowerShell Enterprise Automation Platform adopts a docs-as-code framework to ensure that documentation is treated as an integral part of the software development process. This approach aligns documentation with code, enabling continuous integration, version control, and collaborative maintenance.
+The PowerShell Automation Platform adopts a docs-as-code framework to ensure that documentation is treated as an integral part of the software development process. This approach aligns documentation with code, enabling continuous integration, version control, and collaborative maintenance.
 
 ## What is Docs-as-Code?
 Docs-as-Code is a philosophy and practice where documentation is managed in the same way as source code:
@@ -78,4 +78,4 @@ Docs-as-Code is a philosophy and practice where documentation is managed in the 
 - **CI/CD Tools**: GitHub Actions or similar for automating documentation checks and deployment.
 - **Community Resources**: Reference PowerShell community best practices and style guides for documentation standards.
 
-By implementing this docs-as-code framework, the PowerShell Enterprise Automation Platform ensures that documentation remains a living, integral part of the project, evolving alongside the code to support enterprise users and contributors effectively.
+By implementing this docs-as-code framework, the PowerShell Automation Platform ensures that documentation remains a living, integral part of the project, evolving alongside the code to support production users and contributors effectively.

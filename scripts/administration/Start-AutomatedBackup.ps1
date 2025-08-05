@@ -2,7 +2,7 @@
 .SYNOPSIS
     Automated backup solution with multiple destination support and comprehensive monitoring.
 .DESCRIPTION
-    This script provides enterprise-grade backup automation with support for files, folders,
+    This script provides backup automation with support for files, folders,
     databases, and system state backups. Features include compression, encryption, retention
     policies, cloud storage integration, and detailed reporting.
 .PARAMETER BackupConfigPath

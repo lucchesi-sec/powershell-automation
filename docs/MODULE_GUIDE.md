@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides comprehensive information about the PowerShell modules included in the Enterprise Automation Platform. Each module is designed for specific enterprise functions and can be used independently or together for comprehensive automation solutions.
+This guide provides comprehensive information about the PowerShell modules included in the Automation Platform. Each module is designed for specific functions and can be used independently or together for comprehensive automation solutions.
 
 ## Core Architecture
 
@@ -21,7 +21,7 @@ modules/
 ## PSAdminCore Module
 
 ### Purpose
-Provides shared enterprise functions used across all administration scripts, ensuring consistency and reducing code duplication.
+Provides shared functions used across all administration scripts, ensuring consistency and reducing code duplication.
 
 ### Key Functions
 
@@ -269,7 +269,7 @@ Test-ModuleFunctionality
 
 ---
 
-This module guide provides the foundation for effectively using and maintaining the PowerShell Enterprise Automation Platform modules.
+This module guide provides the foundation for effectively using and maintaining the PowerShell Automation Platform modules.
 
 ## PSActiveDirectory Module
 

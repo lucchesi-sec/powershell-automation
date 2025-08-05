@@ -1,4 +1,4 @@
-# Architecture of PowerShell Enterprise Automation Platform
+# Architecture of PowerShell Automation Platform
 
 ## Table of Contents
 - [Overview](#overview)
@@ -14,7 +14,7 @@
 - [Deployment Model](#deployment-model)
 
 ## Overview
-The PowerShell Enterprise Automation Platform is designed to streamline IT operations through intelligent automation, focusing on Windows system administration, cybersecurity operations, and infrastructure management. The architecture is built to be modular, scalable, and secure, ensuring that it meets the needs of enterprise environments.
+The PowerShell Automation Platform is designed to streamline IT operations through intelligent automation, focusing on Windows system administration, cybersecurity operations, and infrastructure management. The architecture is built to be modular, scalable, and secure, ensuring that it meets the needs of production environments.
 
 ## Design Principles
 The platform adheres to the following design principles:
@@ -22,14 +22,14 @@ The platform adheres to the following design principles:
 - **Security**: Built-in security features to protect sensitive data and operations.
 - **Automation**: Emphasis on automating repetitive tasks to reduce human error and increase efficiency.
 - **Extensibility**: Easy to extend with new functionality or integrate with other systems.
-- **Compliance**: Designed to support enterprise compliance requirements with audit logging and reporting.
+- **Compliance**: Designed to support production compliance requirements with audit logging and reporting.
 
 ## System Architecture
 
 ### High-Level Architecture
 ```mermaid
 graph TB
-    subgraph "PowerShell Enterprise Automation Platform"
+    subgraph "PowerShell Automation Platform"
         subgraph "Presentation Layer"
             CLI[Command Line Interface]
             API[REST API]
@@ -154,7 +154,7 @@ Data flow within the platform typically follows this pattern:
 1. **Input**: Configuration data or user input is read from JSON files or CSV imports.
 2. **Processing**: Scripts invoke module functions to process data, perform operations, and generate outputs.
 3. **Output**: Results are logged, reported via email, or saved as dashboards/reports in various formats (JSON, CSV, HTML).
-4. **Integration**: Data may be synchronized with cloud services or other enterprise systems.
+4. **Integration**: Data may be synchronized with cloud services or other production systems.
 
 ## Security Architecture
 
@@ -243,4 +243,4 @@ The platform is designed for deployment in Windows environments (Server 2016+, W
 - **Scheduled Deployment**: Use Windows Task Scheduler for automated, recurring operations.
 - **CI/CD Integration**: Future plans to integrate documentation and testing into CI/CD pipelines for continuous updates and validation.
 
-This architecture ensures that the PowerShell Enterprise Automation Platform remains robust, adaptable, and aligned with enterprise needs for automation, security, and compliance.
+This architecture ensures that the PowerShell Automation Platform remains robust, adaptable, and aligned with production needs for automation, security, and compliance.

@@ -9,7 +9,7 @@ name: Update-SystemPatches
 Automates system patch management including download, testing, and installation.
 
 ## Description
-This script provides comprehensive patch management capabilities for Windows systems including automatic patch detection, download, testing in staged environments, and controlled installation. It includes rollback capabilities, maintenance window scheduling, and detailed reporting for enterprise patch management operations.
+This script provides comprehensive patch management capabilities for Windows systems including automatic patch detection, download, testing in staged environments, and controlled installation. It includes rollback capabilities, maintenance window scheduling, and detailed reporting for production patch management operations.
 
 ## Syntax
 ```powershell
@@ -49,7 +49,7 @@ PS C:\> .\Update-SystemPatches.ps1 -UpdateType "All" -DownloadOnly -MaintenanceW
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, Windows Update service, administrator privileges
 - **Caution:** Always test patches in non-production environment first
 

@@ -62,7 +62,7 @@ param(
     [switch]$RemoveOrphaned,
     
     [Parameter(Mandatory = $false)]
-    [string[]]$ExcludeGroups = @("Domain Admins", "Enterprise Admins", "Schema Admins")
+    [string[]]$ExcludeGroups = @("Domain Admins", "Schema Admins")
 )
 
 # Import required modules

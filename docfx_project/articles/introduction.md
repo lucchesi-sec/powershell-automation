@@ -2,16 +2,16 @@
 uid: articles.introduction
 ---
 
-# Introduction to PowerShell Enterprise Automation Platform
+# Introduction to PowerShell Automation Platform
 
-Welcome to the PowerShell Enterprise Automation Platform, a comprehensive solution designed to streamline IT operations through intelligent automation. This platform focuses on Windows system administration, cybersecurity operations, and infrastructure management, providing enterprise-grade tools for modern IT environments.
+Welcome to the PowerShell Automation Platform, a comprehensive solution designed to streamline IT operations through intelligent automation. This platform focuses on Windows system administration, cybersecurity operations, and infrastructure management, providing production-grade tools for modern IT environments.
 
-## What is PowerShell Enterprise Automation Platform?
+## What is PowerShell Automation Platform?
 
-The PowerShell Enterprise Automation Platform is a modular, secure, and scalable automation framework that enables IT professionals to:
+The PowerShell Automation Platform is a modular, secure, and scalable automation framework that enables IT professionals to:
 
 - **Automate routine tasks** and reduce manual intervention
-- **Standardize operations** across enterprise environments
+- **Standardize operations** across production environments
 - **Improve security posture** through consistent security practices
 - **Enhance compliance** with comprehensive audit logging and reporting
 - **Reduce operational costs** by minimizing human error and increasing efficiency
@@ -86,7 +86,7 @@ To begin your automation journey:
 
 ## Community and Support
 
-The PowerShell Enterprise Automation Platform is actively maintained and supported:
+The PowerShell Automation Platform is actively maintained and supported:
 
 - **Documentation**: Comprehensive guides and API references
 - **Examples**: Real-world scenarios and use cases
@@ -99,4 +99,4 @@ Ready to transform your IT operations? Start with our [Quick Start Guide](QUICK_
 
 ---
 
-*PowerShell Enterprise Automation Platform - Empowering IT professionals to build smarter, more secure, and more efficient operations.*
+*PowerShell Automation Platform - Empowering IT professionals to build smarter, more secure, and more efficient operations.*

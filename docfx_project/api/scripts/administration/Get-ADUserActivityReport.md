@@ -9,7 +9,7 @@ name: Get-ADUserActivityReport
 Generates comprehensive Active Directory user activity reports with security insights.
 
 ## Description
-This script creates detailed reports on user activity, including logon patterns, failed attempts, account changes, and security events. It supports multiple output formats and can be scheduled for regular execution to provide insights for security monitoring, compliance auditing, and user behavior analysis in an enterprise environment.
+This script creates detailed reports on user activity, including logon patterns, failed attempts, account changes, and security events. It supports multiple output formats and can be scheduled for regular execution to provide insights for security monitoring, compliance auditing, and user behavior analysis in a production environment.
 
 ## Syntax
 ```powershell
@@ -96,7 +96,7 @@ PS C:\> .\Get-ADUserActivityReport.ps1 -ReportType "Compliance" -Days 90 -EmailR
 This command generates a compliance report for the last 90 days and emails it to the configured recipients.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.1.0
 - **Requires:** ActiveDirectory module, PSAdminCore module, and appropriate permissions to read Active Directory user properties and security event logs from domain controllers.
 

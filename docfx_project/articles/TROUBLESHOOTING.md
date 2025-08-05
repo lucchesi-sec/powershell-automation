@@ -4,7 +4,7 @@ uid: articles.troubleshooting
 
 # Troubleshooting Guide
 
-This comprehensive troubleshooting guide helps you diagnose and resolve common issues with the PowerShell Enterprise Automation Platform.
+This comprehensive troubleshooting guide helps you diagnose and resolve common issues with the PowerShell Automation Platform.
 
 ## Table of Contents
 - [Common Issues](#common-issues)

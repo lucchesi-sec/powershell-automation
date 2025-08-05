@@ -9,7 +9,7 @@ name: Manage-MaintenanceTasks
 Orchestrates and schedules automated maintenance tasks for Windows systems.
 
 ## Description
-This script provides a comprehensive maintenance task orchestration system that manages the execution of various system maintenance operations. It includes task scheduling, dependency management, resource monitoring, and comprehensive reporting for enterprise system maintenance automation.
+This script provides a comprehensive maintenance task orchestration system that manages the execution of various system maintenance operations. It includes task scheduling, dependency management, resource monitoring, and comprehensive reporting for production system maintenance automation.
 
 ## Syntax
 ```powershell
@@ -49,7 +49,7 @@ PS C:\> .\Manage-MaintenanceTasks.ps1 -ExecuteNow -DryRun -ReportStatus
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, administrator privileges for system tasks
 - **Dependencies:** Various maintenance scripts and system utilities
 

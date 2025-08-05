@@ -9,7 +9,7 @@ name: Send-AdminNotification
 Sends administrative notifications via email or other configured channels.
 
 ## Description
-This function provides a centralized notification service for enterprise automation scripts, enabling real-time alerts for critical events. It is designed to integrate with a corporate SMTP server for sending emails, with configuration managed in a 'config/email.json' file.
+This function provides a centralized notification service for automation scripts, enabling real-time alerts for critical events. It is designed to integrate with a corporate SMTP server for sending emails, with configuration managed in a 'config/email.json' file.
 
 For security, it can retrieve SMTP credentials from a secure store via Get-AdminCredential, ensuring that passwords are not hard-coded. If email is not configured, it provides a fallback by writing notifications to a local log file, ensuring no event is lost.
 
@@ -72,7 +72,7 @@ if ($failedServices) {
 This command checks for non-running services and sends a high-priority email to the IT administrators if any are found. This is a typical use case for automated monitoring and alerting.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.2.0
 - **Prerequisites:** For email notifications to work, a valid 'config/email.json' file must be present and correctly configured with SMTP server details. If authentication is required, credentials should be stored using Get-AdminCredential.
 

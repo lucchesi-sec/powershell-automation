@@ -44,7 +44,7 @@ PS C:\> .\Restore-DataFromBackup.ps1 -BackupPath "C:\Backups\Data_20250704.zip" 
 ```
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Requires:** PSAdminCore module, appropriate file system permissions
 - **Security:** Includes encryption key management and access logging
 

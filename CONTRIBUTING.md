@@ -1,4 +1,4 @@
-# Contributing to PowerShell Enterprise Automation Platform
+# Contributing to PowerShell Automation Platform
 
 ## Table of Contents
 - [Code of Conduct](#code-of-conduct)
@@ -19,7 +19,7 @@ In the interest of fostering an open and welcoming environment, we expect all co
 - Show empathy towards other community members.
 
 ## How Can I Contribute?
-There are many ways to contribute to the PowerShell Enterprise Automation Platform:
+There are many ways to contribute to the PowerShell Automation Platform:
 - **Reporting Bugs**: Submit bug reports with detailed descriptions and reproduction steps.
 - **Suggesting Enhancements**: Propose new features or improvements to existing functionality.
 - **Code Contributions**: Develop new modules, scripts, or fix issues in the codebase.
@@ -80,4 +80,4 @@ Join our community for discussions:
 - **Issues**: Use GitHub Issues for bug reports or feature requests.
 - **Contact**: For specific inquiries, reach out to the project maintainers via the repository's contact information.
 
-Thank you for contributing to the PowerShell Enterprise Automation Platform and helping us improve enterprise IT automation!
+Thank you for contributing to the PowerShell Automation Platform and helping us improve IT automation!

@@ -1,6 +1,6 @@
 # Quick-Start: Your First Automation in 30 Minutes
 
-Welcome to the PowerShell Enterprise Automation Platform! This guide will walk you through a minimal, secure deployment to get your first automation running in under 30 minutes.
+Welcome to the PowerShell Automation Platform! This guide will walk you through a minimal, secure deployment to get your first automation running in under 30 minutes.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)

@@ -4,7 +4,7 @@ uid: articles.user-guide
 
 # User Guide
 
-This comprehensive user guide provides detailed instructions for using the PowerShell Enterprise Automation Platform effectively. Whether you're a system administrator, security professional, or IT operations specialist, this guide will help you maximize the platform's capabilities.
+This comprehensive user guide provides detailed instructions for using the PowerShell Automation Platform effectively. Whether you're a system administrator, security professional, or IT operations specialist, this guide will help you maximize the platform's capabilities.
 
 ## Table of Contents
 - [Daily Operations](#daily-operations)

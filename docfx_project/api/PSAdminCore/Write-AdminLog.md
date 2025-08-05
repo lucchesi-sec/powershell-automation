@@ -9,7 +9,7 @@ name: Write-AdminLog
 Writes structured log entries to a centralized admin log file.
 
 ## Description
-This function provides a standardized mechanism for writing log entries, which is critical for maintaining audit trails and troubleshooting automated processes in an enterprise setting.
+This function provides a standardized mechanism for writing log entries, which is critical for maintaining audit trails and troubleshooting automated processes in a production setting.
 
 By logging to a common directory in %ProgramData%, it ensures that log data from all scripts using this platform is collected in one place. The structured log entries include timestamps, severity levels, and categories, allowing for easier parsing, filtering, and analysis, which is essential for security incident response and operational monitoring.
 
@@ -67,7 +67,7 @@ PS C:\> Get-Service | ForEach-Object {
 This command iterates through all system services and writes a warning log entry for each service that is found in a 'Stopped' state. This is useful for automated system health checks.
 
 ## Notes
-- **Author:** Enterprise Automation Team
+- **Author:** Automation Team
 - **Version:** 1.2.0
 - **Prerequisites:** The script must have write permissions to the log directory located at %ProgramData%\PowerShellAutomation\Logs.
 

@@ -5,7 +5,7 @@
     This script creates detailed reports on user activity, including logon patterns, failed attempts,
     account changes, and security events. It supports multiple output formats and can be scheduled
     for regular execution to provide insights for security monitoring, compliance auditing, and
-    user behavior analysis in an enterprise environment.
+    user behavior analysis in a Windows environment.
 .PARAMETER ReportType
     Specifies the type of report to generate.
     - Summary: A high-level overview of user account statistics.
@@ -45,7 +45,7 @@
     This command generates a compliance report for the last 90 days and emails it to the
     configured recipients.
 .NOTES
-    Author: Enterprise Automation Team
+    Author: Automation Team
     Version: 1.1.0
     Requires: ActiveDirectory module, PSAdminCore module, and appropriate permissions to read
     Active Directory user properties and security event logs from domain controllers.
@@ -278,7 +278,7 @@ try {
             }
 
             # Privileged accounts
-            $privilegedGroups = @("Domain Admins", "Enterprise Admins", "Schema Admins", "Administrators")
+            $privilegedGroups = @("Domain Admins", "Schema Admins", "Administrators")
             $privilegedUsers = @()
             foreach ($group in $privilegedGroups) {
                 try {

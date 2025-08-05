@@ -1,7 +1,7 @@
 {
-    "name": "PowerShell Enterprise Automation Platform",
-    "short_name": "PS Enterprise",
-    "description": "Comprehensive PowerShell automation platform for enterprise Windows system administration, cybersecurity operations, and IT infrastructure management.",
+    "name": "PowerShell Automation Platform",
+    "short_name": "PS Automation",
+    "description": "Comprehensive PowerShell automation platform for production Windows system administration, cybersecurity operations, and IT infrastructure management.",
     "icons": [
         {
             "src": "assets/powershell-logo.svg",
