@@ -32,21 +32,23 @@ graph TB
     subgraph "PowerShell Automation Platform"
         subgraph "Presentation Layer"
             CLI[Command Line Interface]
-            API[REST API]
-            WEB[Web Dashboard]
+            API[REST API - Planned]
+            WEB[Web Dashboard - Planned]
         end
         
         subgraph "Business Logic Layer"
-            CORE[PSAdminCore]
-            AD[PSActiveDirectory]
-            BACKUP[PSBackupManager]
-            SECURITY[PSSecurity]
-            MONITOR[PSMonitoring]
-            NETWORK[PSNetwork]
-            SYSTEM[PSSystem]
+            CORE[PSAdminCore - Implemented]
+            AD[PSActiveDirectory - Planned]
+            BACKUP[PSBackupManager - Planned]
+            SECURITY[PSSecurity - Planned]
+            MONITOR[PSMonitoring - Planned]
+            NETWORK[PSNetwork - Planned]
+            SYSTEM[PSSystem - Planned]
         end
         
-        subgraph "Data Layer"
+        subgraph "Current Implementation"
+            SCRIPTS[Administration Scripts]
+            MAINT[Maintenance Scripts]
             CONFIG[Configuration Files]
             LOGS[Audit Logs]
             REPORTS[Reports & Analytics]
@@ -61,41 +63,47 @@ graph TB
     end
     
     CLI --> CORE
-    API --> CORE
-    WEB --> CORE
+    API -.-> CORE
+    WEB -.-> CORE
     
-    CORE --> AD
-    CORE --> BACKUP
-    CORE --> SECURITY
-    CORE --> MONITOR
-    CORE --> NETWORK
-    CORE --> SYSTEM
+    CORE --> SCRIPTS
+    CORE --> MAINT
+    SCRIPTS --> CONFIG
+    MAINT --> LOGS
+    SECURITY -.-> REPORTS
     
-    AD --> CONFIG
-    BACKUP --> LOGS
-    SECURITY --> REPORTS
-    
-    BACKUP --> CLOUD
+    SCRIPTS --> CLOUD
     CORE --> EMAIL
-    AD --> ADFS
-    SECURITY --> SIEM
+    SCRIPTS --> ADFS
+    SECURITY -.-> SIEM
     
     style CORE fill:#0078D4,stroke:#106EBE,stroke-width:3px,color:#fff
+    style SCRIPTS fill:#107C10,stroke:#0E6B0E,stroke-width:2px,color:#fff
+    style MAINT fill:#107C10,stroke:#0E6B0E,stroke-width:2px,color:#fff
     style CLOUD fill:#00BCF2,stroke:#0078D4,stroke-width:2px,color:#fff
     style SECURITY fill:#68217A,stroke:#68217A,stroke-width:2px,color:#fff
 ```
 
 ### Modular Structure
-The platform is organized into distinct modules, each focusing on a specific area of functionality:
+The platform is designed with a modular architecture. Currently implemented and planned modules:
+
+#### Currently Implemented
 - **PSAdminCore**: Core shared functions used across all scripts, including logging, credential management, and utility functions.
-- **PSActiveDirectory**: Manages Active Directory operations such as user lifecycle and group synchronization.
-- **PSBackupManager**: Handles backup automation, integrity testing, and cloud synchronization.
-- **PSPerformanceMonitor**: Monitors system performance and generates analytics.
-- **PSSoftwareManager**: Manages software installation and updates.
-- **PSSecurity**: Provides security-related functions like threat detection and compliance reporting.
-- **PSSystem**: Gathers and manages system information.
-- **PSMonitoring**: Monitors system resources and critical services.
-- **PSNetwork**: Provides network-related functionality.
+- **Administration Scripts**: Located in `scripts/administration/`, these provide Active Directory operations, backup management, and user lifecycle management.
+- **Maintenance Scripts**: Located in `scripts/maintenance/`, these handle system maintenance, disk cleanup, and service monitoring.
+
+#### Planned Modules (Roadmap)
+- **PSActiveDirectory**: Dedicated module for Active Directory operations such as user lifecycle and group synchronization.
+- **PSBackupManager**: Module for backup automation, integrity testing, and cloud synchronization.
+- **PSPerformanceMonitor**: Module for system performance monitoring and analytics generation.
+- **PSSoftwareManager**: Module for software installation and update management.
+- **PSSecurity**: Module for security-related functions like threat detection and compliance reporting.
+- **PSSystem**: Module for system information gathering and management.
+- **PSMonitoring**: Module for system resource and critical service monitoring.
+- **PSNetwork**: Module for network-related functionality.
+
+#### Current Implementation Status
+The platform currently operates with PSAdminCore as the foundation, providing shared functionality to individual PowerShell scripts. The modular structure above represents the planned evolution toward a more componentized architecture.
 
 ### Core Components
 - **Scripts**: Located in the `scripts/administration` directory, these are the operational scripts that leverage the modules for specific tasks like user management and backup operations.
@@ -243,4 +251,4 @@ The platform is designed for deployment in Windows environments (Server 2016+, W
 - **Scheduled Deployment**: Use Windows Task Scheduler for automated, recurring operations.
 - **CI/CD Integration**: Future plans to integrate documentation and testing into CI/CD pipelines for continuous updates and validation.
 
-This architecture ensures that the PowerShell Automation Platform remains robust, adaptable, and aligned with production needs for automation, security, and compliance.
+This architecture ensures that the PowerShell Automation Platform remains robust, adaptable, and aligned with production needs for automation, security, and compliance. The current implementation provides immediate value through PSAdminCore and targeted scripts, while the planned modular structure will enable greater scalability and maintainability.

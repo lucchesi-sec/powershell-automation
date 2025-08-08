@@ -46,9 +46,11 @@ We aim to maintain a high-quality, consistent codebase:
 ## Documentation Guidelines
 Documentation is critical for the usability and maintainability of the platform:
 - **Inline Documentation**: Document functions and scripts with comment-based help that includes synopsis, description, parameters, examples, and notes.
-- **Project Documentation**: Update relevant documentation in the `docs` directory for architectural changes or new features.
+- **Project Documentation**: Update relevant documentation in the `docfx_project/articles` directory for architectural changes or new features.
+- **API Documentation**: Add or update function documentation in `docfx_project/api/PSAdminCore/` for new PSAdminCore functions.
 - **README Updates**: Ensure the main `README.md` reflects any new functionality or changes in usage.
 - **Docs-as-Code**: Treat documentation as part of the codebase, ensuring it is version-controlled and updated with code changes.
+- **DocFX Site**: The documentation site is built from `docfx_project/` using DocFX. Run `docfx build` locally to test changes.
 
 ## Testing Requirements
 All code contributions must include appropriate tests:

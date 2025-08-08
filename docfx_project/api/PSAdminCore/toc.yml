@@ -2,6 +2,14 @@
   href: index.md
 - name: Functions
   items:
+  - name: Get-AdminConfig
+    href: Get-AdminConfig.md
+  - name: Set-AdminConfig
+    href: Set-AdminConfig.md
+  - name: Initialize-AdminEnvironment
+    href: Initialize-AdminEnvironment.md
+  - name: Test-AdminConnectivity
+    href: Test-AdminConnectivity.md
   - name: Get-AdminCredential
     href: Get-AdminCredential.md
   - name: New-AdminReport

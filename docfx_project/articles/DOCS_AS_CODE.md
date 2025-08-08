@@ -33,14 +33,15 @@ Docs-as-Code is a philosophy and practice where documentation is managed in the 
 
 ## Implementation Strategy
 ### Version Control
-- All documentation is stored in the project's Git repository under the `docs` directory.
+- All documentation is stored in the project's Git repository under the `docfx_project` directory.
 - Documentation changes are committed with descriptive messages, linked to related code changes or issues.
 - Branching strategies (e.g., feature branches) apply to documentation, ensuring changes are tested before merging.
 
 ### Documentation Structure
-- **Centralized Location**: Core documentation files like `README.md`, `ARCHITECTURE.md`, and `CONTRIBUTING.md` are at the root or in the `docs` directory.
-- **Module Documentation**: Each module in `modules` should include a README or inline comment-based help for functions.
-- **Script Documentation**: Scripts in `scripts/administration` must have comment-based help and usage examples.
+- **Centralized Location**: Core documentation files like `README.md`, `ARCHITECTURE.md`, and `CONTRIBUTING.md` are in the `docfx_project/articles` directory.
+- **API Documentation**: Function and script documentation is in `docfx_project/api` with individual markdown files for each function.
+- **Module Documentation**: Each module in `modules` should include inline comment-based help for functions.
+- **Script Documentation**: Scripts in `scripts/administration` and `scripts/maintenance` must have comment-based help and usage examples.
 - **Format**: Use Markdown for project-level documentation and PowerShell comment-based help for code-level documentation.
 
 ### Workflow Integration
@@ -49,10 +50,11 @@ Docs-as-Code is a philosophy and practice where documentation is managed in the 
 - **Release Process**: Documentation for new features or changes must be updated before a release is tagged.
 
 ### Automation Tools
+- **DocFX**: Primary documentation generation tool that builds the documentation site from markdown files.
 - **Linting**: Use tools like `markdownlint` to enforce consistent formatting in Markdown files.
 - **Link Checking**: Automate checks for broken links in documentation using tools integrated into CI pipelines.
-- **Documentation Generation**: Explore tools like `PSDoc` for generating documentation from comment-based help in PowerShell scripts.
-- **Deployment**: Automatically deploy documentation to a static site or internal wiki as part of the release process (future goal).
+- **Documentation Generation**: DocFX automatically generates API documentation from markdown files in `docfx_project/api`.
+- **Deployment**: GitHub Actions automatically deploy documentation to GitHub Pages on push to main branch.
 
 ### Review and Approval Process
 - Documentation changes are subject to the same peer review process as code, ensuring accuracy and clarity.

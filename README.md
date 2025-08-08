@@ -27,7 +27,7 @@ The PSAdminCore module has been fully implemented with comprehensive functionali
 - ✅ Complete module structure with public/private function organization
 - ✅ All core functions implemented (logging, privileges, notifications, etc.)
 - ✅ Enhanced security features and credential management
-- ✅ Comprehensive Pester test suite
+- ✅ Pester unit tests for core functions, with ongoing expansion
 - ✅ CI/CD pipeline integration with automated testing
 - ✅ All scripts updated to use the new module system
 
